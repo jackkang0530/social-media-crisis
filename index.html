@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Crisis Database</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .main-nav-tabs {
+            display: flex;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .main-nav-tab {
+            flex: 1;
+            padding: 20px;
+            background: #ecf0f1;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            color: #7f8c8d;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+
+        .main-nav-tab:hover {
+            background: #d5dbdb;
+        }
+
+        .main-nav-tab.active {
+            background: #3498db;
+            color: white;
+        }
+
+        /* Data Classification Navigation */
+        .data-classification {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .data-classification h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .classification-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .classification-tab {
+            padding: 12px 20px;
+            background: #ecf0f1;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #7f8c8d;
+            transition: all 0.3s;
+        }
+
+        .classification-tab:hover {
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .classification-tab.active {
+            background: #3498db;
+            border-color: #3498db;
+            color: white;
+        }
+
+        /* OPB Sub Categories */
+        .opb-subcategories {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .opb-subcategories.active {
+            display: block;
+        }
+
+        .opb-subcategories h4 {
+            color: #34495e;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .subcategory-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .subcategory-tab {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #7f8c8d;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .subcategory-tab:hover {
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .subcategory-tab.active {
+            background: #3498db;
+            border-color: #3498db;
+            color: white;
+        }
+
+        /* Stakeholder Filters */
+        .stakeholder-filters {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stakeholder-filters.active {
+            display: grid;
+        }
+
+        .stakeholder-group {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e1e8ed;
+        }
+
+        .stakeholder-group h4 {
+            color: #34495e;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .stakeholder-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .stakeholder-option {
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid #d5dbdb;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #7f8c8d;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .stakeholder-option:hover {
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .stakeholder-option.active {
+            background: #3498db;
+            border-color: #3498db;
+            color: white;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .results-info {
+            background: #ecf0f1;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            max-height: 70vh;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            background: #34495e;
+            color: white;
+            padding: 12px 35px 12px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            cursor: pointer;
+            user-select: none;
+            border-right: 1px solid #2c3e50;
+            position: relative;
+        }
+
+        th:hover {
+            background: #2c3e50;
+        }
+
+        th.sortable::after {
+            content: " ↕";
+            opacity: 0.5;
+            font-size: 12px;
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        th.sort-asc::after {
+            content: " ↑";
+            opacity: 1;
+            color: #3498db;
+        }
+
+        th.sort-desc::after {
+            content: " ↓";
+            opacity: 1;
+            color: #3498db;
+        }
+
+        .filter-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #bdc3c7;
+            font-size: 18px;
+            transition: color 0.2s;
+            z-index: 101;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+        }
+
+        .filter-icon:hover {
+            color: #3498db;
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .filter-icon.active {
+            color: #e74c3c;
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #ecf0f1;
+            border-right: 1px solid #ecf0f1;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        td:hover {
+            background-color: #e8f6ff !important;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fdfdfd;
+        }
+
+        tr:nth-child(even):hover {
+            background-color: #f8f9fa;
+        }
+
+        .link-cell {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .link-cell:hover {
+            text-decoration: underline;
+        }
+
+        .pagination {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 2px solid #e1e8ed;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #f8f9fa;
+            border-color: #3498db;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination .current-page {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        /* Filter Dropdown Styles */
+        .filter-dropdown {
+            position: fixed;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 9999;
+            min-width: 250px;
+            max-width: 400px;
+            max-height: 300px;
+            display: none;
+        }
+
+        .filter-dropdown.show {
+            display: block;
+        }
+
+        .filter-search {
+            padding: 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .filter-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e1e8ed;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .filter-options {
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 5px 0;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.2s;
+            min-height: 32px;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .filter-option:hover {
+            background-color: #f8f9fa;
+        }
+
+        .filter-option input[type="checkbox"] {
+            margin-right: 8px;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .filter-option-text {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #2c3e50;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .filter-option-count {
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-left: 8px;
+            flex-shrink: 0;
+            font-weight: 500;
+        }
+
+        .filter-actions {
+            padding: 10px;
+            border-top: 1px solid #ecf0f1;
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-actions button {
+            padding: 6px 12px;
+            border: 1px solid #e1e8ed;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            background: white;
+        }
+
+        .filter-actions .apply-btn {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .filter-actions .clear-btn {
+            background: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+        }
+
+        /* Cell Content Modal */
+        .cell-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .cell-modal.show {
+            display: flex;
+        }
+
+        .cell-modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 80%;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .cell-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .cell-modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .cell-modal-close {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cell-modal-close:hover {
+            background: #c0392b;
+        }
+
+        .cell-modal-text {
+            line-height: 1.6;
+            color: #34495e;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px 6px;
+                max-width: 150px;
+            }
+
+            .classification-tabs, .subcategory-tabs {
+                justify-content: center;
+            }
+
+            .main-nav-tabs {
+                flex-direction: column;
+            }
+
+            .cell-modal-content {
+                max-width: 95%;
+                max-height: 90%;
+                padding: 20px;
+            }
+
+            .stakeholder-filters {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Social Media Crisis Database</h1>
+            <p>Comprehensive database of social media crisis events and related articles</p>
+        </div>
+
+        <!-- Main Navigation -->
+        <div class="main-nav">
+            <div class="main-nav-tabs">
+                <button class="main-nav-tab active" data-dataset="1">
+                    📋 Dataset 1: Coded Events
+                </button>
+                <button class="main-nav-tab" data-dataset="2">
+                    📰 Dataset 2: Article Information
+                </button>
+            </div>
+        </div>
+
+        <!-- Data Classification for Dataset 1 -->
+        <div class="data-classification" id="dataset1-classification">
+            <h3>📂 Data Classification</h3>
+            <div class="classification-tabs">
+                <button class="classification-tab active" data-classification="opb">
+                    Online Problematic Behavior
+                </button>
+                <button class="classification-tab" data-classification="crisis">
+                    Relevant to Crisis
+                </button>
+            </div>
+
+            <!-- OPB Subcategories -->
+            <div class="opb-subcategories active" id="opb-subcategories">
+                <h4>Problematic Behavior Categories:</h4>
+                <div class="subcategory-tabs">
+                    <button class="subcategory-tab active" data-subcategory="all">
+                        All
+                    </button>
+                    <button class="subcategory-tab" data-subcategory="deceptive">
+                        Deceptive & Fraudulent
+                    </button>
+                    <button class="subcategory-tab" data-subcategory="offensive">
+                        Offensive & Objectionable
+                    </button>
+                    <button class="subcategory-tab" data-subcategory="safety">
+                        User Safety
+                    </button>
+                    <button class="subcategory-tab" data-subcategory="regulated">
+                        Regulated Goods & Services
+                    </button>
+                    <button class="subcategory-tab" data-subcategory="scaled">
+                        Scaled Abuse
+                    </button>
+                    <button class="subcategory-tab" data-subcategory="violent">
+                        Violent & Criminal
+                    </button>
+                    <button class="subcategory-tab" data-subcategory="community">
+                        Community Rules
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stakeholder Filters -->
+            <div class="stakeholder-filters active" id="stakeholder-filters">
+                <div class="stakeholder-group">
+                    <h4>👤 Giver Filter</h4>
+                    <div class="stakeholder-options" id="giver-options">
+                        <div class="stakeholder-option active" data-giver="all">All</div>
+                        <div class="stakeholder-option" data-giver="1-r">1-r</div>
+                        <div class="stakeholder-option" data-giver="1-i">1-i</div>
+                        <div class="stakeholder-option" data-giver="n-r">n-r</div>
+                        <div class="stakeholder-option" data-giver="S">S</div>
+                    </div>
+                </div>
+                <div class="stakeholder-group">
+                    <h4>👥 Receiver Filter</h4>
+                    <div class="stakeholder-options" id="receiver-options">
+                        <div class="stakeholder-option active" data-receiver="all">All</div>
+                        <div class="stakeholder-option" data-receiver="1-r">1-r</div>
+                        <div class="stakeholder-option" data-receiver="1-i">1-i</div>
+                        <div class="stakeholder-option" data-receiver="n-r">n-r</div>
+                        <div class="stakeholder-option" data-receiver="S">S</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by keyword...">
+            </div>
+            <div class="results-info" id="resultsInfo">
+                Loading data...
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table id="dataTable">
+                    <thead id="tableHeader">
+                        <!-- Headers will be dynamically generated -->
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td colspan="11" class="loading">📊 Loading database...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="pagination" id="pagination">
+                <button id="firstPage">First</button>
+                <button id="prevPage">Previous</button>
+                <span id="pageInfo">1 / 1</span>
+                <button id="nextPage">Next</button>
+                <button id="lastPage">Last</button>
+                <button id="loadMoreBtn" style="display: none; margin-left: 20px; background: #27ae60; color: white; border-color: #27ae60;">Load More Data</button>
+            </div>
+        </div>
+
+        <!-- Filter Dropdowns -->
+        <div id="filter-dropdowns">
+            <!-- Dynamically generated filter dropdowns -->
+        </div>
+
+        <!-- Cell Content Modal -->
+        <div class="cell-modal" id="cellModal">
+            <div class="cell-modal-content">
+                <div class="cell-modal-header">
+                    <div class="cell-modal-title" id="cellModalTitle">Cell Content</div>
+                    <button class="cell-modal-close" id="cellModalClose">×</button>
+                </div>
+                <div class="cell-modal-text" id="cellModalText"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentDataset = '1';
+        let currentClassification = 'opb';
+        let currentSubcategory = 'all';
+        let currentGiverFilter = 'all';
+        let currentReceiverFilter = 'all';
+        let currentData = [];
+        let filteredData = [];
+        let currentPage = 1;
+        const itemsPerPage = 50;
+        let sortColumn = -1;
+        let sortDirection = 'asc';
+        
+        // Large dataset handling
+        let allDatasetData = [];
+        let currentBatch = 0;
+        let totalBatches = 0;
+        let isLoadingMore = false;
+        
+        // Column filters state
+        const columnFilters = {};
+        
+        // Dataset configurations
+        const datasetConfigs = {
+            '1': {
+                name: 'Coded Events',
+                opbCategories: {
+                    all: { file: 'dataset1_all.csv', name: 'All OPB Entries' },
+                    deceptive: { file: 'dataset1_deceptive.csv', name: 'Deceptive & Fraudulent Behavior' },
+                    offensive: { file: 'dataset1_offensive.csv', name: 'Offensive & Objectionable Content' },
+                    safety: { file: 'dataset1_safety.csv', name: 'User Safety' },
+                    regulated: { file: 'dataset1_regulated.csv', name: 'Regulated Goods & Services' },
+                    scaled: { file: 'dataset1_scaled.csv', name: 'Scaled Abuse' },
+                    violent: { file: 'dataset1_violent.csv', name: 'Violent & Criminal Behavior' },
+                    community: { file: 'dataset1_community.csv', name: 'Community Specific Rules' }
+                },
+                crisisFile: 'dataset1_crisis.csv',
+                // Original CSV columns (with Event Num and Article Set)
+                csvColumns: [
+                    "Event Num", "Event Title", "Article Set", "Selected Article", 
+                    "Stakeholder", "Giver", "Receiver", "Problematic Behavior", 
+                    "Aftermath", "Platform", "Link"
+                ],
+                // Columns to exclude from display
+                excludeColumns: [0, 2], // Event Num (index 0) and Article Set (index 2)
+                // Display columns (after excluding unwanted columns)
+                columns: [
+                    "Event Title", "Selected Article", "Stakeholder", 
+                    "Giver", "Receiver", "Problematic Behavior", 
+                    "Aftermath", "Platform", "Link"
+                ],
+                // Filter columns (adjusted for new indices after exclusion)
+                filterColumns: {
+                    stakeholder: 2,  // Originally index 4, now index 2
+                    giver: 3,        // Originally index 5, now index 3
+                    receiver: 4,     // Originally index 6, now index 4
+                    behavior: 5,     // Originally index 7, now index 5
+                    platform: 7      // Originally index 9, now index 7
+                }
+            },
+            '2': {
+                name: 'Article Information',
+                file: 'dataset2_articles.csv',
+                columns: [
+                    "Number", "Title", "Publication Title", "Date", 
+                    "Predicted Code", "Additional Entries"
+                ],
+                filterColumns: {
+                    publication: 2
+                },
+                isLargeDataset: true,
+                batchSize: 5000
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing...');
+            setupEventListeners();
+            loadCurrentData();
+        });
+
+        function setupEventListeners() {
+            console.log('Setting up event listeners...');
+            
+            // Main navigation
+            document.querySelectorAll('.main-nav-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    const dataset = e.target.dataset.dataset;
+                    switchDataset(dataset);
+                });
+            });
+
+            // Data classification tabs
+            document.querySelectorAll('.classification-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    const classification = e.target.dataset.classification;
+                    switchClassification(classification);
+                });
+            });
+
+            // OPB subcategory tabs
+            document.querySelectorAll('.subcategory-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    const subcategory = e.target.dataset.subcategory;
+                    switchSubcategory(subcategory);
+                });
+            });
+
+            // Stakeholder filters
+            document.querySelectorAll('[data-giver]').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    const giver = e.target.dataset.giver;
+                    selectGiverFilter(giver);
+                });
+            });
+
+            document.querySelectorAll('[data-receiver]').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    const receiver = e.target.dataset.receiver;
+                    selectReceiverFilter(receiver);
+                });
+            });
+
+            // Search
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+            
+            // Cell modal
+            document.getElementById('cellModalClose').addEventListener('click', closeCellModal);
+            document.getElementById('cellModal').addEventListener('click', (e) => {
+                if (e.target.id === 'cellModal') {
+                    closeCellModal();
+                }
+            });
+            
+            // Pagination
+            document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
+            document.getElementById('prevPage').addEventListener('click', () => goToPage(currentPage - 1));
+            document.getElementById('nextPage').addEventListener('click', () => goToPage(currentPage + 1));
+            document.getElementById('lastPage').addEventListener('click', () => goToPage(Math.ceil(filteredData.length / itemsPerPage)));
+            
+            // Load More button for large datasets
+            document.getElementById('loadMoreBtn').addEventListener('click', loadMoreData);
+            
+            // Outside click to close dropdowns
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.filter-icon') && !e.target.closest('.filter-dropdown')) {
+                    document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('show');
+                    });
+                }
+            });
+        }
+
+        function switchDataset(dataset) {
+            if (currentDataset === dataset) return;
+            
+            currentDataset = dataset;
+            
+            // Update main nav tabs
+            document.querySelectorAll('.main-nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.dataset === dataset) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Show/hide classification panel
+            const classificationPanel = document.getElementById('dataset1-classification');
+            if (dataset === '1') {
+                classificationPanel.style.display = 'block';
+                // Reset to defaults
+                currentClassification = 'opb';
+                currentSubcategory = 'all';
+                currentGiverFilter = 'all';
+                currentReceiverFilter = 'all';
+                updateClassificationUI();
+            } else {
+                classificationPanel.style.display = 'none';
+            }
+            
+            // Reset filters and load data
+            resetFilters();
+            loadCurrentData();
+        }
+
+        function switchClassification(classification) {
+            if (currentClassification === classification) return;
+            
+            currentClassification = classification;
+            
+            // Update classification tabs
+            document.querySelectorAll('.classification-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.classification === classification) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Show/hide relevant sections
+            const opbSubcategories = document.getElementById('opb-subcategories');
+            const stakeholderFilters = document.getElementById('stakeholder-filters');
+            
+            if (classification === 'opb') {
+                opbSubcategories.classList.add('active');
+                stakeholderFilters.classList.add('active');
+                currentSubcategory = 'all';
+                updateSubcategoryUI();
+            } else {
+                opbSubcategories.classList.remove('active');
+                stakeholderFilters.classList.remove('active');
+            }
+            
+            // Reset stakeholder filters
+            currentGiverFilter = 'all';
+            currentReceiverFilter = 'all';
+            updateStakeholderUI();
+            
+            resetFilters();
+            loadCurrentData();
+        }
+
+        function switchSubcategory(subcategory) {
+            if (currentSubcategory === subcategory) return;
+            
+            currentSubcategory = subcategory;
+            updateSubcategoryUI();
+            resetFilters();
+            loadCurrentData();
+        }
+
+        function selectGiverFilter(giver) {
+            currentGiverFilter = giver;
+            updateStakeholderUI();
+            applyAllFilters();
+        }
+
+        function selectReceiverFilter(receiver) {
+            currentReceiverFilter = receiver;
+            updateStakeholderUI();
+            applyAllFilters();
+        }
+
+        function updateClassificationUI() {
+            document.querySelectorAll('.classification-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.classification === currentClassification) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        function updateSubcategoryUI() {
+            document.querySelectorAll('.subcategory-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.subcategory === currentSubcategory) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        function updateStakeholderUI() {
+            // Update giver options
+            document.querySelectorAll('[data-giver]').forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.giver === currentGiverFilter) {
+                    option.classList.add('active');
+                }
+            });
+            
+            // Update receiver options
+            document.querySelectorAll('[data-receiver]').forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.receiver === currentReceiverFilter) {
+                    option.classList.add('active');
+                }
+            });
+        }
+
+        async function loadCurrentData() {
+            try {
+                showLoadingState();
+                
+                let csvFile;
+                if (currentDataset === '1') {
+                    if (currentClassification === 'opb') {
+                        csvFile = datasetConfigs['1'].opbCategories[currentSubcategory].file;
+                    } else {
+                        csvFile = datasetConfigs['1'].crisisFile;
+                    }
+                } else {
+                    csvFile = datasetConfigs['2'].file;
+                }
+                
+                console.log(`Loading file: ${csvFile}`);
+                
+                const response = await fetch(csvFile);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${csvFile}: ${response.status} ${response.statusText}`);
+                }
+                
+                const csvText = await response.text();
+                console.log(`CSV loaded, size: ${csvText.length} characters`);
+                
+                // Handle large datasets differently
+                const config = datasetConfigs[currentDataset];
+                if (config.isLargeDataset) {
+                    await loadLargeDataset(csvText);
+                } else {
+                    const parsedData = await parseCSVData(csvText);
+                    console.log(`Parsed ${parsedData.length} records`);
+                    
+                    if (parsedData.length > 0) {
+                        currentData = parsedData;
+                    } else {
+                        throw new Error('No data parsed from CSV file');
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Data loading failed:', error);
+                showErrorState(error.message);
+                currentData = [];
+                allDatasetData = [];
+            } finally {
+                setupTableHeaders();
+                setupColumnFilters();
+                loadData();
+                hideLoadingState();
+            }
+        }
+
+        function setupTableHeaders() {
+            console.log('Setting up table headers...');
+            const config = datasetConfigs[currentDataset];
+            const thead = document.getElementById('tableHeader');
+            
+            const headers = config.columns.map((column, index) => {
+                const isFilterColumn = Object.values(config.filterColumns || {}).includes(index);
+                
+                if (isFilterColumn) {
+                    const filterKey = Object.keys(config.filterColumns).find(key => 
+                        config.filterColumns[key] === index
+                    );
+                    return `
+                        <th class="sortable" data-column="${index}">
+                            ${column}
+                            <span class="filter-icon" data-filter="${filterKey}">🔽</span>
+                        </th>
+                    `;
+                } else {
+                    return `<th class="sortable" data-column="${index}">${column}</th>`;
+                }
+            }).join('');
+            
+            thead.innerHTML = `<tr>${headers}</tr>`;
+            
+            // Setup sorting event listeners
+            document.querySelectorAll('th.sortable').forEach(th => {
+                th.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('filter-icon')) {
+                        e.stopPropagation();
+                        return;
+                    }
+                    handleSort(parseInt(th.dataset.column));
+                });
+            });
+            
+            // Setup filter icon event listeners
+            console.log('Setting up filter icon event listeners...');
+            document.querySelectorAll('.filter-icon').forEach(icon => {
+                console.log('Adding event listener to filter icon:', icon.dataset.filter);
+                icon.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    const filterKey = e.target.dataset.filter;
+                    console.log('Filter icon clicked:', filterKey);
+                    
+                    const dropdown = document.getElementById(`filter-${filterKey}`);
+                    console.log('Dropdown found:', dropdown);
+                    
+                    if (dropdown) {
+                        // Close other dropdowns
+                        document.querySelectorAll('.filter-dropdown').forEach(dd => {
+                            if (dd !== dropdown) dd.classList.remove('show');
+                        });
+                        
+                        // Toggle current dropdown
+                        dropdown.classList.toggle('show');
+                        console.log('Dropdown toggled, show class:', dropdown.classList.contains('show'));
+                        
+                        if (dropdown.classList.contains('show')) {
+                            updateFilterDropdownData(filterKey);
+                            positionFixedDropdown(e.target, dropdown);
+                        }
+                    } else {
+                        console.error('Dropdown not found for filter:', filterKey);
+                    }
+                });
+            });
+        }
+
+        function setupColumnFilters() {
+            console.log('Setting up column filters...');
+            const config = datasetConfigs[currentDataset];
+            if (!config.filterColumns) return;
+            
+            // Clear existing filters
+            const filterContainer = document.getElementById('filter-dropdowns');
+            filterContainer.innerHTML = '';
+            
+            // Reset column filters state
+            Object.keys(config.filterColumns).forEach(filterName => {
+                columnFilters[filterName] = new Set();
+            });
+            
+            // Create filter dropdowns
+            Object.keys(config.filterColumns).forEach(filterName => {
+                console.log('Creating dropdown for filter:', filterName);
+                const dropdown = document.createElement('div');
+                dropdown.className = 'filter-dropdown';
+                dropdown.id = `filter-${filterName}`;
+                dropdown.innerHTML = `
+                    <div class="filter-search">
+                        <input type="text" placeholder="Search..." class="filter-search-input">
+                    </div>
+                    <div class="filter-options"></div>
+                    <div class="filter-actions">
+                        <button class="apply-btn">Apply</button>
+                        <button class="clear-btn">Select All</button>
+                    </div>
+                `;
+                filterContainer.appendChild(dropdown);
+            });
+            
+            // Setup filter event listeners with delay to ensure DOM is ready
+            setTimeout(() => {
+                initializeColumnFilters();
+                setupFilterEventListeners();
+            }, 100);
+        }
+
+        function setupFilterEventListeners() {
+            console.log('Setting up filter event listeners...');
+            const config = datasetConfigs[currentDataset];
+            if (!config.filterColumns) return;
+            
+            Object.keys(config.filterColumns).forEach(filterName => {
+                const dropdown = document.getElementById(`filter-${filterName}`);
+                
+                if (!dropdown) {
+                    console.error('Dropdown not found for filter:', filterName);
+                    return;
+                }
+                
+                // Filter search
+                const searchInput = dropdown.querySelector('.filter-search-input');
+                if (searchInput) {
+                    searchInput.addEventListener('input', () => {
+                        filterDropdownOptions(filterName, searchInput.value);
+                    });
+                }
+                
+                // Apply button
+                const applyBtn = dropdown.querySelector('.apply-btn');
+                if (applyBtn) {
+                    applyBtn.addEventListener('click', () => {
+                        applyColumnFilter(filterName);
+                        dropdown.classList.remove('show');
+                    });
+                }
+                
+                // Select All button
+                const clearBtn = dropdown.querySelector('.clear-btn');
+                if (clearBtn) {
+                    clearBtn.addEventListener('click', () => {
+                        clearColumnFilter(filterName);
+                    });
+                }
+            });
+        }
+
+        function initializeColumnFilters() {
+            const config = datasetConfigs[currentDataset];
+            if (!config.filterColumns) return;
+            
+            Object.keys(config.filterColumns).forEach(filterName => {
+                const columnIndex = config.filterColumns[filterName];
+                const uniqueValues = [...new Set(currentData.map(row => row[columnIndex]).filter(val => val && val.trim()))];
+                console.log(`${filterName} unique values:`, uniqueValues);
+                
+                const dropdown = document.getElementById(`filter-${filterName}`);
+                if (dropdown) {
+                    updateFilterDropdown(filterName, uniqueValues);
+                }
+            });
+            
+            // Debug: Show actual stakeholder values in the data
+            if (currentDataset === '1' && currentClassification === 'opb') {
+                console.log('=== STAKEHOLDER DEBUG INFO ===');
+                const giverValues = [...new Set(currentData.map(row => row[3]).filter(val => val && val.trim()))];
+                const receiverValues = [...new Set(currentData.map(row => row[4]).filter(val => val && val.trim()))];
+                
+                console.log('Actual Giver values in data:', giverValues);
+                console.log('Actual Receiver values in data:', receiverValues);
+                
+                // Update stakeholder filter options based on actual data
+                updateStakeholderOptions('giver', giverValues);
+                updateStakeholderOptions('receiver', receiverValues);
+            }
+        }
+        
+        function updateStakeholderOptions(type, actualValues) {
+            const container = document.getElementById(`${type}-options`);
+            if (!container) return;
+            
+            // Keep "All" option and add actual values from data
+            const allOption = container.querySelector(`[data-${type}="all"]`);
+            container.innerHTML = '';
+            container.appendChild(allOption);
+            
+            // Add actual values found in data
+            actualValues.forEach(value => {
+                if (value && value.trim()) {
+                    const option = document.createElement('div');
+                    option.className = 'stakeholder-option';
+                    option.setAttribute(`data-${type}`, value);
+                    option.textContent = value;
+                    option.addEventListener('click', (e) => {
+                        if (type === 'giver') {
+                            selectGiverFilter(value);
+                        } else {
+                            selectReceiverFilter(value);
+                        }
+                    });
+                    container.appendChild(option);
+                }
+            });
+        }
+
+        function updateFilterDropdown(filterName, values) {
+            const dropdown = document.getElementById(`filter-${filterName}`);
+            if (!dropdown) return;
+            
+            const optionsContainer = dropdown.querySelector('.filter-options');
+            if (!optionsContainer) return;
+            
+            values.sort();
+            
+            const config = datasetConfigs[currentDataset];
+            const columnIndex = config.filterColumns[filterName];
+            
+            const optionsHTML = values.map(value => {
+                const escapedValue = value.replace(/"/g, '&quot;');
+                const count = currentData.filter(row => row[columnIndex] === value).length;
+                const isChecked = columnFilters[filterName].size === 0 || columnFilters[filterName].has(value);
+                
+                return `
+                    <div class="filter-option" data-value="${escapedValue}">
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} />
+                        <span class="filter-option-text">${value}</span>
+                        <span class="filter-option-count">(${count})</span>
+                    </div>
+                `;
+            }).join('');
+            
+            optionsContainer.innerHTML = optionsHTML;
+            
+            // Add event listeners
+            optionsContainer.querySelectorAll('.filter-option').forEach(option => {
+                const checkbox = option.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.addEventListener('change', () => {
+                        updateFilterButtonState(filterName);
+                    });
+                }
+                
+                option.addEventListener('click', (e) => {
+                    if (e.target.type !== 'checkbox' && checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                        updateFilterButtonState(filterName);
+                    }
+                });
+            });
+        }
+
+        function updateFilterDropdownData(filterName) {
+            const config = datasetConfigs[currentDataset];
+            const columnIndex = config.filterColumns[filterName];
+            const currentFilteredData = getFilteredDataExcluding(filterName);
+            const uniqueValues = [...new Set(currentFilteredData.map(row => row[columnIndex]).filter(val => val && val.trim()))];
+            
+            const dropdown = document.getElementById(`filter-${filterName}`);
+            const optionsContainer = dropdown.querySelector('.filter-options');
+            
+            uniqueValues.sort();
+            
+            optionsContainer.innerHTML = uniqueValues.map(value => {
+                const count = currentFilteredData.filter(row => row[columnIndex] === value).length;
+                const isChecked = columnFilters[filterName].size === 0 || columnFilters[filterName].has(value);
+                
+                return `
+                    <div class="filter-option" data-value="${value}">
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} />
+                        <span class="filter-option-text">${value}</span>
+                        <span class="filter-option-count">(${count})</span>
+                    </div>
+                `;
+            }).join('');
+            
+            // Re-add event listeners
+            optionsContainer.querySelectorAll('.filter-option').forEach(option => {
+                const checkbox = option.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.addEventListener('change', () => {
+                        updateFilterButtonState(filterName);
+                    });
+                }
+                
+                option.addEventListener('click', (e) => {
+                    if (e.target.type !== 'checkbox' && checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                        updateFilterButtonState(filterName);
+                    }
+                });
+            });
+        }
+
+        function updateFilterButtonState(filterName) {
+            const filterButton = document.querySelector(`[data-filter="${filterName}"]`);
+            const dropdown = document.getElementById(`filter-${filterName}`);
+            const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
+            const checkedBoxes = dropdown.querySelectorAll('input[type="checkbox"]:checked');
+            
+            if (checkedBoxes.length === 0 || checkedBoxes.length === checkboxes.length) {
+                filterButton.classList.remove('active');
+            } else {
+                filterButton.classList.add('active');
+            }
+        }
+
+        function applyColumnFilter(filterName) {
+            const dropdown = document.getElementById(`filter-${filterName}`);
+            const checkedOptions = dropdown.querySelectorAll('input[type="checkbox"]:checked');
+            
+            columnFilters[filterName].clear();
+            checkedOptions.forEach(checkbox => {
+                const value = checkbox.closest('.filter-option').dataset.value;
+                columnFilters[filterName].add(value);
+            });
+            
+            applyAllFilters();
+            updateFilterButtonState(filterName);
+        }
+
+        function clearColumnFilter(filterName) {
+            const dropdown = document.getElementById(`filter-${filterName}`);
+            const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = true;
+            });
+            
+            columnFilters[filterName].clear();
+            updateFilterButtonState(filterName);
+        }
+
+        function getFilteredDataExcluding(excludeFilter) {
+            let data = [...currentData];
+            const config = datasetConfigs[currentDataset];
+            
+            // Apply search filter
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                data = data.filter(row => 
+                    row.some(cell => cell.toString().toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            // Apply stakeholder filters (only for OPB data)
+            if (currentDataset === '1' && currentClassification === 'opb') {
+                if (currentGiverFilter !== 'all') {
+                    data = data.filter(row => {
+                        const giverValue = row[3] ? row[3].toString().trim() : '';
+                        return giverValue === currentGiverFilter;
+                    });
+                }
+                if (currentReceiverFilter !== 'all') {
+                    data = data.filter(row => {
+                        const receiverValue = row[4] ? row[4].toString().trim() : '';
+                        return receiverValue === currentReceiverFilter;
+                    });
+                }
+            }
+            
+            // Apply other column filters (excluding current filter)
+            if (config.filterColumns) {
+                Object.keys(config.filterColumns).forEach(filterName => {
+                    if (filterName !== excludeFilter && columnFilters[filterName] && columnFilters[filterName].size > 0) {
+                        const columnIndex = config.filterColumns[filterName];
+                        data = data.filter(row => columnFilters[filterName].has(row[columnIndex]));
+                    }
+                });
+            }
+            
+            return data;
+        }
+
+        function positionFixedDropdown(button, dropdown) {
+            const buttonRect = button.getBoundingClientRect();
+            dropdown.style.left = buttonRect.left + 'px';
+            dropdown.style.top = (buttonRect.bottom + 2) + 'px';
+        }
+
+        function filterDropdownOptions(filterName, searchTerm) {
+            const dropdown = document.getElementById(`filter-${filterName}`);
+            const options = dropdown.querySelectorAll('.filter-option');
+            
+            options.forEach(option => {
+                const text = option.querySelector('.filter-option-text').textContent.toLowerCase();
+                const isVisible = text.includes(searchTerm.toLowerCase());
+                option.style.display = isVisible ? 'flex' : 'none';
+            });
+        }
+
+        async function parseCSVData(csvText) {
+            if (!csvText || csvText.trim().length === 0) {
+                console.error('CSV text is empty');
+                return [];
+            }
+            
+            const lines = csvText.trim().split('\n');
+            const data = [];
+            
+            console.log(`Total lines: ${lines.length}`);
+            
+            if (lines.length < 2) {
+                console.error('CSV file too short');
+                return [];
+            }
+            
+            const header = parseCSVLine(lines[0]);
+            console.log('Original CSV Header:', header);
+            
+            const config = datasetConfigs[currentDataset];
+            const expectedColumns = config.columns;
+            const excludeColumns = config.excludeColumns || [];
+            
+            console.log('Columns to exclude:', excludeColumns);
+            console.log('Expected display columns:', expectedColumns);
+            
+            let successCount = 0;
+            let errorCount = 0;
+            
+            for (let i = 1; i < lines.length; i++) {
+                try {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+                    
+                    const originalRow = parseCSVLine(line);
+                    
+                    // Filter out excluded columns
+                    const filteredRow = originalRow.filter((cell, index) => !excludeColumns.includes(index));
+                    
+                    if (filteredRow.length >= expectedColumns.length - 1 && filteredRow[0] && filteredRow[0].trim()) {
+                        // Fill missing columns with empty strings
+                        while (filteredRow.length < expectedColumns.length) {
+                            filteredRow.push('');
+                        }
+                        data.push(filteredRow);
+                        successCount++;
+                    } else {
+                        errorCount++;
+                        if (errorCount <= 5) {
+                            console.warn(`Line ${i} skipped - columns: ${filteredRow.length}, first value: "${filteredRow[0]}"`);
+                        }
+                    }
+                } catch (error) {
+                    errorCount++;
+                    if (errorCount <= 5) {
+                        console.warn(`Line ${i} parsing failed:`, error.message);
+                    }
+                }
+                
+                if (i % 5000 === 0) {
+                    console.log(`Parsing progress: ${Math.round((i / lines.length) * 100)}% (success: ${successCount}, errors: ${errorCount})`);
+                    
+                    const resultsInfo = document.getElementById('resultsInfo');
+                    resultsInfo.textContent = `Processing data... ${Math.round((i / lines.length) * 100)}%`;
+                    
+                    await new Promise(resolve => setTimeout(resolve, 1));
+                }
+            }
+            
+            console.log(`Parsing complete - success: ${successCount}, errors: ${errorCount}`);
+            console.log('Sample filtered row:', data[0]);
+            return data;
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            let i = 0;
+            
+            while (i < line.length) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    if (inQuotes && i + 1 < line.length && line[i + 1] === '"') {
+                        current += '"';
+                        i += 2;
+                    } else {
+                        inQuotes = !inQuotes;
+                        i++;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                    i++;
+                } else {
+                    current += char;
+                    i++;
+                }
+            }
+            
+            result.push(current.trim());
+            return result;
+        }
+
+        function loadData() {
+            filteredData = [...currentData];
+            renderTable();
+            updatePagination();
+            updateResultsInfo();
+            updateLoadMoreButton();
+        }
+
+        function handleSearch() {
+            applyAllFilters();
+        }
+
+        function applyAllFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const config = datasetConfigs[currentDataset];
+            
+            console.log('Applying filters...');
+            console.log('Current Giver Filter:', currentGiverFilter);
+            console.log('Current Receiver Filter:', currentReceiverFilter);
+            console.log('Current data length:', currentData.length);
+            
+            // Debug: Show sample data structure
+            if (currentData.length > 0) {
+                console.log('Sample row:', currentData[0]);
+                console.log('Giver column (index 3):', currentData[0][3]);
+                console.log('Receiver column (index 4):', currentData[0][4]);
+            }
+            
+            filteredData = currentData.filter(row => {
+                // Search filter
+                const matchesSearch = searchTerm === '' || row.some(cell => 
+                    cell.toString().toLowerCase().includes(searchTerm)
+                );
+                
+                // Stakeholder filters (only for OPB data)
+                let matchesStakeholder = true;
+                if (currentDataset === '1' && currentClassification === 'opb') {
+                    // Giver filter
+                    if (currentGiverFilter !== 'all') {
+                        const giverValue = row[3] ? row[3].toString().trim() : '';
+                        matchesStakeholder = matchesStakeholder && (giverValue === currentGiverFilter);
+                        
+                        // Debug logging
+                        if (!matchesStakeholder) {
+                            console.log(`Giver mismatch: "${giverValue}" !== "${currentGiverFilter}"`);
+                        }
+                    }
+                    
+                    // Receiver filter
+                    if (currentReceiverFilter !== 'all') {
+                        const receiverValue = row[4] ? row[4].toString().trim() : '';
+                        matchesStakeholder = matchesStakeholder && (receiverValue === currentReceiverFilter);
+                        
+                        // Debug logging
+                        if (!matchesStakeholder) {
+                            console.log(`Receiver mismatch: "${receiverValue}" !== "${currentReceiverFilter}"`);
+                        }
+                    }
+                }
+                
+                // Column filters
+                const matchesColumnFilters = !config.filterColumns || Object.keys(config.filterColumns).every(filterName => {
+                    if (!columnFilters[filterName] || columnFilters[filterName].size === 0) return true;
+                    const columnIndex = config.filterColumns[filterName];
+                    return columnFilters[filterName].has(row[columnIndex]);
+                });
+                
+                return matchesSearch && matchesStakeholder && matchesColumnFilters;
+            });
+            
+            console.log('Filtered data length:', filteredData.length);
+            
+            currentPage = 1;
+            renderTable();
+            updatePagination();
+            updateResultsInfo();
+            updateLoadMoreButton();
+        }
+
+        function handleSort(columnIndex) {
+            if (sortColumn === columnIndex) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = columnIndex;
+                sortDirection = 'asc';
+            }
+
+            filteredData.sort((a, b) => {
+                let aVal = a[columnIndex];
+                let bVal = b[columnIndex];
+
+                const aNum = parseFloat(aVal);
+                const bNum = parseFloat(bVal);
+                if (!isNaN(aNum) && !isNaN(bNum)) {
+                    aVal = aNum;
+                    bVal = bNum;
+                } else {
+                    aVal = aVal.toString().toLowerCase();
+                    bVal = bVal.toString().toLowerCase();
+                }
+
+                if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+                if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            updateSortIcons();
+            renderTable();
+        }
+
+        function updateSortIcons() {
+            document.querySelectorAll('th.sortable').forEach(th => {
+                th.classList.remove('sort-asc', 'sort-desc');
+                if (parseInt(th.dataset.column) === sortColumn) {
+                    th.classList.add(sortDirection === 'asc' ? 'sort-asc' : 'sort-desc');
+                }
+            });
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = filteredData.slice(startIndex, endIndex);
+
+            if (pageData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #7f8c8d;">No results found.</td></tr>';
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+            const config = datasetConfigs[currentDataset];
+            
+            pageData.forEach((row, rowIndex) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = row.map((cell, cellIndex) => {
+                    // Check if this is a link column
+                    const isLinkColumn = (currentDataset === '1' && cellIndex === row.length - 1) || 
+                                       (cell && cell.startsWith('http'));
+                    
+                    if (isLinkColumn && cell && cell.startsWith('http')) {
+                        return `<td><a href="${cell}" target="_blank" rel="noopener noreferrer" class="link-cell">${cell}</a></td>`;
+                    }
+                    
+                    const cellContent = cell || '';
+                    const displayContent = cellContent.length > 50 ? cellContent.substring(0, 50) + '...' : cellContent;
+                    const columnName = config.columns[cellIndex] || `Column ${cellIndex + 1}`;
+                    
+                    return `<td title="${cellContent}" onclick="showCellContent('${columnName}', \`${cellContent.replace(/`/g, '\\`').replace(/\\/g, '\\\\')}\`)">${displayContent}</td>`;
+                }).join('');
+                fragment.appendChild(tr);
+            });
+            
+            tbody.innerHTML = '';
+            tbody.appendChild(fragment);
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            
+            document.getElementById('firstPage').disabled = currentPage === 1;
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+            document.getElementById('lastPage').disabled = currentPage === totalPages || totalPages === 0;
+            
+            document.getElementById('pageInfo').textContent = `${currentPage} / ${Math.max(1, totalPages)}`;
+        }
+
+        function updateResultsInfo() {
+            const total = filteredData.length;
+            const start = Math.min((currentPage - 1) * itemsPerPage + 1, total);
+            const end = Math.min(currentPage * itemsPerPage, total);
+            
+            const config = datasetConfigs[currentDataset];
+            
+            if (total === 0) {
+                document.getElementById('resultsInfo').textContent = 'No results found';
+            } else {
+                let infoText = `${start}-${end} / ${total.toLocaleString()} entries`;
+                
+                // Add batch info for large datasets
+                if (config.isLargeDataset && currentBatch < totalBatches) {
+                    const loadedTotal = allDatasetData.length;
+                    infoText += ` (${loadedTotal.toLocaleString()} loaded)`;
+                }
+                
+                document.getElementById('resultsInfo').textContent = infoText;
+            }
+        }
+
+        function goToPage(page) {
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                renderTable();
+                updatePagination();
+                updateResultsInfo();
+            }
+        }
+
+        function showLoadingState() {
+            const resultsInfo = document.getElementById('resultsInfo');
+            resultsInfo.textContent = 'Loading data...';
+            resultsInfo.style.background = '#3498db';
+            resultsInfo.style.color = 'white';
+            
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '<tr><td colspan="11" class="loading">📊 Loading database...<br><small>Please wait while we process the data.</small></td></tr>';
+        }
+
+        function hideLoadingState() {
+            const resultsInfo = document.getElementById('resultsInfo');
+            resultsInfo.style.background = '#ecf0f1';
+            resultsInfo.style.color = '#7f8c8d';
+        }
+
+        function showErrorState(message) {
+            const resultsInfo = document.getElementById('resultsInfo');
+            resultsInfo.textContent = 'Error loading data';
+            resultsInfo.style.background = '#e74c3c';
+            resultsInfo.style.color = 'white';
+            
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; padding: 40px; color: #e74c3c;">⚠ ${message}<br><small>Please check the CSV files are properly uploaded.</small></td></tr>`;
+        }
+
+        function resetFilters() {
+            // Reset search
+            document.getElementById('searchInput').value = '';
+            
+            // Reset column filters
+            Object.keys(columnFilters).forEach(filterName => {
+                columnFilters[filterName].clear();
+            });
+            
+            // Reset page
+            currentPage = 1;
+            sortColumn = -1;
+            sortDirection = 'asc';
+            
+            // Reset large dataset variables
+            if (datasetConfigs[currentDataset].isLargeDataset) {
+                allDatasetData = [];
+                currentBatch = 0;
+                totalBatches = 0;
+                isLoadingMore = false;
+            }
+        }
+
+        function showCellContent(columnName, content) {
+            const modal = document.getElementById('cellModal');
+            const title = document.getElementById('cellModalTitle');
+            const text = document.getElementById('cellModalText');
+            
+            title.textContent = columnName;
+            text.textContent = content || '(Empty)';
+            modal.classList.add('show');
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCellModal() {
+            const modal = document.getElementById('cellModal');
+            modal.classList.remove('show');
+            
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateLoadMoreButton() {
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const config = datasetConfigs[currentDataset];
+            
+            if (config.isLargeDataset && currentBatch < totalBatches) {
+                loadMoreBtn.style.display = 'inline-block';
+                loadMoreBtn.disabled = isLoadingMore;
+                loadMoreBtn.textContent = isLoadingMore ? 'Loading...' : `Load More Data (${currentBatch}/${totalBatches})`;
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        // Large dataset functions (placeholder for future use)
+        async function loadLargeDataset(csvText) {
+            // Placeholder for large dataset handling
+            const parsedData = await parseCSVData(csvText);
+            currentData = parsedData;
+        }
+
+        async function loadMoreData() {
+            // Placeholder for loading more data
+            console.log('Load more data functionality not implemented yet');
+        }
+    </script>
+</body>
+</html>
