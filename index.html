@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Media Crisis Database</title>
+    <title>Social Media Crisis Dataset</title>
     <style>
         * {
             margin: 0;
@@ -941,20 +941,20 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Social Media Crisis Database</h1>
-            <p>Comprehensive database of social media crisis events and related articles</p>
+            <h1>📊 Social Media Crisis Dataset</h1>
+            <p>Comprehensive dataset of social media crisis events and related articles</p>
             
             <div class="introduction">
-                <h3>🎯 About This Database</h3>
-                <p>This database contains a comprehensive collection of social media crisis events from 2004-2023, systematically categorized and annotated for research purposes. Our dataset includes both coded crisis events and raw article information, providing researchers with multiple perspectives on social media-related incidents.</p>
+                <h3>About This Dataset</h3>
+                <p>This dataset contains a comprehensive collection of social media crisis events from 2004-2023, systematically categorized and annotated for research purposes. Our dataset includes both coded crisis events and raw article information, providing researchers with multiple perspectives on social media-related incidents.</p>
                 
                 <div class="dataset-overview">
                     <div class="dataset-card">
-                        <h4>📋 Dataset 1: Coded Events</h4>
+                        <h4>Dataset 1: Coded Events</h4>
                         <p>Hand-coded social media crisis events with detailed stakeholder analysis, online problematic behavior classification, and outcome tracking. Filter by behavior type or stakeholder relationships.</p>
                     </div>
                     <div class="dataset-card">
-                        <h4>📰 Dataset 2: Article Information</h4>
+                        <h4>Dataset 2: Article Information</h4>
                         <p>Raw news articles about social media-related incidents with publication details and dates. Browse comprehensive article metadata.</p>
                     </div>
                 </div>
@@ -1060,7 +1060,7 @@
             <div class="stakeholder-filters active" id="stakeholder-filters">
                 <div class="stakeholder-group">
                     <h4>
-                        👤 Giver Filter
+                        🔴 Giver Filter
                         <span class="info-icon">ℹ️
                             <div class="tooltip">Who initiated or caused the problematic behavior</div>
                         </span>
@@ -1077,7 +1077,7 @@
                 </div>
                 <div class="stakeholder-group">
                     <h4>
-                        👤 Receiver Filter
+                        🔵 Receiver Filter
                         <span class="info-icon">ℹ️
                             <div class="tooltip">Who was affected by or targeted in the problematic behavior</div>
                         </span>
@@ -1112,7 +1112,7 @@
                     </thead>
                     <tbody id="tableBody">
                         <tr>
-                            <td colspan="11" class="loading">📊 Loading database...</td>
+                            <td colspan="11" class="loading">📊 Loading dataset...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1817,7 +1817,7 @@
                     });
                 } else {
                     option.classList.add('disabled');
-                    option.setAttribute('data-tooltip', `${tooltips[value]} (No case in current data)`);
+                    option.setAttribute('data-tooltip', `${tooltips[value]} (No cases in current data)`);
                 }
                 
                 container.appendChild(option);
@@ -2314,7 +2314,7 @@
             resultsInfo.style.color = 'white';
             
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '<tr><td colspan="11" class="loading">📊 Loading database...<br><small>Please wait while we process the data.</small></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="11" class="loading">📊 Loading dataset...<br><small>Please wait while we process the data.</small></td></tr>';
         }
 
         function hideLoadingState() {
