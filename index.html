@@ -1239,6 +1239,13 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing...');
+            
+            // Show Dataset 1 filters by default since Dataset 1 is active
+            const dataset1Filters = document.getElementById('dataset1-filters');
+            if (dataset1Filters) {
+                dataset1Filters.classList.add('active');
+            }
+            
             setupEventListeners();
             loadCurrentData();
         });
