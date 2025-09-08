@@ -1622,14 +1622,30 @@
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             
             if (!searchTerm) {
-                if (currentDataset === '2' && currentClassification === 'opb') {
+                // No search term - apply appropriate filters
+                if (currentDataset === '1') {
+                    applyDataset1Filters();
+                } else if (currentDataset === '2' && currentClassification === 'opb') {
                     applyFilters();
                 } else {
                     filteredData = [...currentData];
                 }
             } else {
+                // Search term exists - get base data first
                 let dataToSearch = currentData;
-                if (currentDataset === '2' && currentClassification === 'opb') {
+                
+                if (currentDataset === '1') {
+                    // Apply Dataset 1 filters first, then search
+                    dataToSearch = currentData.filter(row => {
+                        const publication = row[1]; // Publication Title
+                        const year = row[3]; // Year
+                        
+                        const publicationMatch = !selectedPublication || publication === selectedPublication;
+                        const yearMatch = !selectedYear || year === selectedYear;
+                        
+                        return publicationMatch && yearMatch;
+                    });
+                } else if (currentDataset === '2' && currentClassification === 'opb') {
                     // Apply stakeholder filters first, then search
                     dataToSearch = currentData.filter(row => {
                         const giver = row[2];
@@ -1640,6 +1656,7 @@
                     });
                 }
                 
+                // Apply search filter
                 filteredData = dataToSearch.filter(row => 
                     row.some(cell => 
                         cell && cell.toString().toLowerCase().includes(searchTerm)
