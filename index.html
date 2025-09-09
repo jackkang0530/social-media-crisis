@@ -1213,6 +1213,9 @@
                             return `<td><a href="${cellContent}" target="_blank" class="link-cell">View Article</a></td>`;
                         } else if (headers[cellIndex] === 'Link' && cellContent.startsWith('http')) {
                             return `<td><a href="${cellContent}" target="_blank" class="link-cell">Link</a></td>`;
+                        } else if (headers[cellIndex] === 'Problematic Behavior') {
+                            const colorClass = getBehaviorColorClass(cellContent);
+                            return `<td><span class="behavior-tag ${colorClass}">${cellContent}</span></td>`;
                         } else {
                             return `<td title="${cellContent}">${cellContent}</td>`;
                         }
