@@ -793,14 +793,8 @@
                 dataset2Classification.classList.remove('active');
                 
                 // Reset Dataset 1 filters
-                selectedPublication = '';
-                selectedYear = '';
-                if (document.getElementById('publicationFilter')) {
-                    document.getElementById('publicationFilter').value = '';
-                }
-                if (document.getElementById('yearFilter')) {
-                    document.getElementById('yearFilter').value = '';
-                }
+                selectedPublications.clear();
+                selectedYears.clear();
             } else {
                 dataset1Filters.style.display = 'none';
                 dataset1Filters.classList.remove('active');
