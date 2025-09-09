@@ -402,11 +402,19 @@
             margin-bottom: 20px;
             padding: 20px;
             display: none;
-            min-height: 300px; /* Fixed minimum height to prevent shrinking */
+            transition: min-height 0.3s ease;
         }
 
         .dataset2-controls.show {
             display: block;
+        }
+
+        .dataset2-controls.opb-mode {
+            min-height: 300px;
+        }
+
+        .dataset2-controls.crisis-mode {
+            min-height: 120px;
         }
 
         .dataset2-controls h3 {
@@ -448,7 +456,6 @@
         /* OPB Subcategories */
         .opb-section {
             display: none;
-            min-height: 200px; /* Fixed minimum height */
         }
 
         .opb-section.show {
@@ -588,7 +595,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            min-height: 120px; /* Fixed minimum height */
         }
 
         .stakeholder-group {
@@ -710,7 +716,7 @@
             background: #34495e;
             color: white;
             padding: 12px;
-            text-align: left;
+            text-align: center;
             font-weight: 600;
             position: sticky;
             top: 0;
@@ -820,6 +826,7 @@
             white-space: nowrap;
             cursor: pointer;
             transition: background-color 0.2s;
+            text-align: center;
         }
 
         td:hover {
@@ -1119,7 +1126,7 @@
         </div>
 
         <!-- Dataset 2 Controls -->
-        <div class="dataset2-controls" id="dataset2-controls">
+        <div class="dataset2-controls opb-mode" id="dataset2-controls">
             <h3>Dataset 2 Classification & Filters</h3>
             
             <!-- Classification Tabs -->
@@ -1383,6 +1390,133 @@
             }
             
             return trimmed;
+        }
+
+        function parseCrisisArticleData(cellData) {
+            if (!cellData || cellData.trim() === '') return { title: '', publication: '', date: '' };
+            
+            console.log('Parsing crisis data:', cellData);
+            
+            let trimmed = cellData.trim();
+            
+            // Remove outer quotes if the entire string is wrapped in quotes
+            if ((trimmed.startsWith('"') && trimmed.endsWith('"')) && trimmed.indexOf('"', 1) !== trimmed.lastIndexOf('"')) {
+                trimmed = trimmed.slice(1, -1);
+            } else if ((trimmed.startsWith("'") && trimmed.endsWith("'")) && trimmed.indexOf("'", 1) !== trimmed.lastIndexOf("'")) {
+                trimmed = trimmed.slice(1, -1);
+            }
+            
+            // Check if it's a tuple format
+            if (trimmed.startsWith('(') && trimmed.endsWith(')')) {
+                try {
+                    const tupleContent = trimmed.slice(1, -1);
+                    const parts = [];
+                    let currentPart = '';
+                    let inQuotes = false;
+                    let quoteChar = '';
+                    let parenDepth = 0;
+                    
+                    for (let i = 0; i < tupleContent.length; i++) {
+                        const char = tupleContent[i];
+                        
+                        if ((char === '"' || char === "'") && parenDepth === 0) {
+                            if (!inQuotes) {
+                                inQuotes = true;
+                                quoteChar = char;
+                            } else if (char === quoteChar) {
+                                // Check if this is actually the closing quote by looking ahead
+                                let isClosingQuote = true;
+                                for (let j = i + 1; j < tupleContent.length; j++) {
+                                    if (tupleContent[j] === ',' && parenDepth === 0) {
+                                        break;
+                                    } else if (tupleContent[j] === quoteChar) {
+                                        isClosingQuote = false;
+                                        break;
+                                    } else if (tupleContent[j] !== ' ') {
+                                        isClosingQuote = false;
+                                        break;
+                                    }
+                                }
+                                if (isClosingQuote) {
+                                    inQuotes = false;
+                                    quoteChar = '';
+                                } else {
+                                    currentPart += char;
+                                }
+                            } else {
+                                currentPart += char;
+                            }
+                        } else if (char === '(' && !inQuotes) {
+                            parenDepth++;
+                            currentPart += char;
+                        } else if (char === ')' && !inQuotes) {
+                            parenDepth--;
+                            currentPart += char;
+                        } else if (char === ',' && !inQuotes && parenDepth === 0) {
+                            if (currentPart.trim()) {
+                                parts.push(currentPart.trim());
+                                currentPart = '';
+                            }
+                        } else {
+                            currentPart += char;
+                        }
+                    }
+                    
+                    if (currentPart.trim()) {
+                        parts.push(currentPart.trim());
+                    }
+                    
+                    console.log('Parsed parts:', parts);
+                    
+                    // Clean up parts by removing quotes
+                    const cleanedParts = parts.map(part => {
+                        let cleaned = part.trim();
+                        if ((cleaned.startsWith('"') && cleaned.endsWith('"')) || 
+                            (cleaned.startsWith("'") && cleaned.endsWith("'"))) {
+                            cleaned = cleaned.slice(1, -1);
+                        }
+                        return cleaned.trim();
+                    });
+                    
+                    console.log('Cleaned parts:', cleanedParts);
+                    
+                    if (cleanedParts.length >= 3) {
+                        // Assume last part is date, second-to-last is publication, rest is title
+                        const date = cleanedParts[cleanedParts.length - 1];
+                        const publication = cleanedParts[cleanedParts.length - 2];
+                        const title = cleanedParts.slice(0, -2).join(', ');
+                        
+                        const result = {
+                            title: title || '',
+                            publication: publication || '',
+                            date: date || ''
+                        };
+                        console.log('Parsed result:', result);
+                        return result;
+                    } else if (cleanedParts.length === 2) {
+                        return {
+                            title: cleanedParts[0] || '',
+                            publication: cleanedParts[1] || '',
+                            date: ''
+                        };
+                    } else if (cleanedParts.length === 1) {
+                        return {
+                            title: cleanedParts[0] || '',
+                            publication: '',
+                            date: ''
+                        };
+                    }
+                } catch (error) {
+                    console.warn('Error parsing crisis tuple data:', error);
+                }
+            }
+            
+            // If not a tuple, treat as simple title
+            return {
+                title: trimmed || '',
+                publication: '',
+                date: ''
+            };
         }
 
         function convertStakeholderValue(value) {
@@ -2104,12 +2238,18 @@
                 }
             });
 
-            // Show/hide OPB section
+            // Show/hide OPB section and adjust container height
             const opbSection = document.getElementById('opb-section');
+            const dataset2Controls = document.getElementById('dataset2-controls');
+            
             if (classification === 'opb') {
                 opbSection.classList.add('show');
+                dataset2Controls.classList.remove('crisis-mode');
+                dataset2Controls.classList.add('opb-mode');
             } else {
                 opbSection.classList.remove('show');
+                dataset2Controls.classList.remove('opb-mode');
+                dataset2Controls.classList.add('crisis-mode');
             }
 
             currentClassification = classification;
@@ -2189,12 +2329,19 @@
                     // Dataset 2 processing
                     if (currentClassification === 'crisis') {
                         currentData = parsedData.map(row => {
-                            return [
-                                row[0] || '', // Article Title
-                                row[1] || '', // Publication
-                                row[2] || '', // Date
-                                row[3] || ''  // Link
-                            ];
+                            if (row.length >= 2) {
+                                // Parse the first column which contains article info
+                                const articleInfo = parseCrisisArticleData(row[0]);
+                                const link = row[1] || '';
+                                
+                                return [
+                                    articleInfo.title,
+                                    articleInfo.publication,
+                                    articleInfo.date,
+                                    link
+                                ];
+                            }
+                            return ['', '', '', ''];
                         });
                     } else {
                         // OPB data processing with stakeholder conversion
