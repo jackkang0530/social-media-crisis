@@ -2051,6 +2051,10 @@
                 currentGiverFilters = new Set(['all']);
                 currentReceiverFilters = new Set(['all']);
                 
+                // Set initial mode for Dataset 2 controls
+                dataset2Controls.classList.remove('crisis-mode');
+                dataset2Controls.classList.add('opb-mode');
+                
                 // Update Dataset 2 UI
                 document.querySelectorAll('.classification-tab').forEach(tab => {
                     tab.classList.remove('active');
