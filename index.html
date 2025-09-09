@@ -134,6 +134,97 @@
             color: white;
         }
 
+        /* Terminology Guide */
+        .terminology-guide {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .terminology-guide.show {
+            display: block;
+        }
+
+        .terminology-header {
+            background: #34495e;
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background-color 0.3s;
+        }
+
+        .terminology-header:hover {
+            background: #2c3e50;
+        }
+
+        .terminology-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .terminology-toggle {
+            font-size: 16px;
+            transition: transform 0.3s;
+        }
+
+        .terminology-toggle.expanded {
+            transform: rotate(180deg);
+        }
+
+        .terminology-content {
+            padding: 20px;
+            display: block;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .terminology-content.show {
+            display: block;
+        }
+
+        .terminology-content.hide {
+            display: none;
+        }
+
+        .terminology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .term-item {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 15px;
+            border-left: 3px solid #3498db;
+        }
+
+        .term-code {
+            font-weight: 600;
+            color: #3498db;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .term-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .term-description {
+            color: #7f8c8d;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
         /* Dataset 1 Filters */
         .dataset1-filters {
             background: white;
@@ -207,11 +298,6 @@
             border-color: #3498db;
         }
 
-        .multiselect-button:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-
         .multiselect-text {
             flex: 1;
             font-size: 13px;
@@ -261,10 +347,6 @@
             background-color: #f8f9fa;
         }
 
-        .multiselect-option:last-child {
-            border-bottom: none;
-        }
-
         .option-checkbox {
             width: 16px;
             height: 16px;
@@ -284,17 +366,6 @@
             background: #3498db;
             border-color: #3498db;
             color: white;
-        }
-
-        .option-text {
-            flex: 1;
-            font-size: 13px;
-            color: #34495e;
-        }
-
-        .option-select-all {
-            font-weight: 600;
-            color: #2c3e50;
         }
 
         .clear-filter-btn {
@@ -500,10 +571,6 @@
             align-items: center;
         }
 
-        .search-box {
-            position: relative;
-        }
-
         .search-box input {
             width: 100%;
             padding: 12px 16px;
@@ -556,10 +623,87 @@
             cursor: pointer;
             user-select: none;
             border-right: 1px solid #2c3e50;
+            position: relative;
         }
 
         th:hover {
             background: #2c3e50;
+        }
+
+        th.filterable {
+            padding-right: 40px;
+        }
+
+        .header-filter {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #2c3e50;
+            border: 1px solid #34495e;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .header-filter:hover {
+            background: #3498db;
+            border-color: #3498db;
+        }
+
+        .header-filter-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 4px;
+            min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1001;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header-filter-dropdown.show {
+            display: block;
+        }
+
+        .header-filter-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #34495e;
+            border-bottom: 1px solid #f8f9fa;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-filter-option:hover {
+            background: #f8f9fa;
+        }
+
+        .header-filter-checkbox {
+            width: 14px;
+            height: 14px;
+            border: 1px solid #d5dbdb;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            font-size: 8px;
+            color: transparent;
+        }
+
+        .header-filter-checkbox.checked {
+            background: #3498db;
+            border-color: #3498db;
+            color: white;
         }
 
         td {
@@ -584,10 +728,6 @@
 
         tr:nth-child(even) {
             background-color: #fdfdfd;
-        }
-
-        tr:nth-child(even):hover {
-            background-color: #f8f9fa;
         }
 
         .link-cell {
@@ -759,6 +899,46 @@
             </div>
         </div>
 
+        <!-- Terminology Guide (Only for Dataset 2) -->
+        <div class="terminology-guide" id="terminology-guide">
+            <div class="terminology-header" onclick="toggleTerminology()">
+                <h3>Stakeholder Terminology Guide</h3>
+                <span class="terminology-toggle expanded" id="terminologyToggle">🔼</span>
+            </div>
+            <div class="terminology-content show" id="terminologyContent">
+                <p style="color: #7f8c8d; margin-bottom: 20px; font-size: 14px;">
+                    Our research uses specific terms to identify different types of stakeholders in social media crises. Understanding these categories is essential for interpreting the dataset:
+                </p>
+                <div class="terminology-grid">
+                    <div class="term-item">
+                        <div class="term-code">Regular Individual</div>
+                        <div class="term-name">Individual Regular User</div>
+                        <div class="term-description">A single person using social media without significant influence or following. Typically represents everyday users, private individuals, or non-public figures.</div>
+                    </div>
+                    <div class="term-item">
+                        <div class="term-code">Influential Individual</div>
+                        <div class="term-name">Individual Influential User</div>
+                        <div class="term-description">A single person with significant social media influence, such as celebrities, politicians, verified accounts, or public figures with large followings.</div>
+                    </div>
+                    <div class="term-item">
+                        <div class="term-code">Regular Group</div>
+                        <div class="term-name">Multiple Regular Users</div>
+                        <div class="term-description">A group of regular users acting collectively, such as online communities, hashtag movements, or crowds of ordinary social media users.</div>
+                    </div>
+                    <div class="term-item">
+                        <div class="term-code">Influential Group</div>
+                        <div class="term-name">Multiple Influential Users</div>
+                        <div class="term-description">A group of influential users acting together, such as coordinated campaigns by celebrities, politicians working together, or influential accounts acting in concert.</div>
+                    </div>
+                    <div class="term-item">
+                        <div class="term-code">Social Media Platform</div>
+                        <div class="term-name">Social Media Platform</div>
+                        <div class="term-description">The social media platform itself as an entity, including platform policies, algorithmic decisions, content moderation actions, or official platform statements.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Dataset 1 Filters -->
         <div class="dataset1-filters show" id="dataset1-filters">
             <h3>Filter Dataset 1</h3>
@@ -842,27 +1022,27 @@
                 <!-- Stakeholder Filters -->
                 <div class="stakeholder-section">
                     <div class="stakeholder-group">
-                        <h4>🔴 Giver Filter (Who caused the problem)</h4>
+                        <h4>Giver Filter (Who caused the problem)</h4>
                         <div class="stakeholder-options" id="giver-options">
                             <div class="stakeholder-option all-option active" data-giver="all">All</div>
-                            <div class="stakeholder-option" data-giver="1-r">1-r (Individual Regular)</div>
-                            <div class="stakeholder-option" data-giver="1-i">1-i (Individual Influential)</div>
-                            <div class="stakeholder-option" data-giver="n-r">n-r (Multiple Regular)</div>
-                            <div class="stakeholder-option" data-giver="n-i">n-i (Multiple Influential)</div>
-                            <div class="stakeholder-option" data-giver="S">S (Social Media Platform)</div>
+                            <div class="stakeholder-option" data-giver="Regular Individual">Regular Individual</div>
+                            <div class="stakeholder-option" data-giver="Influential Individual">Influential Individual</div>
+                            <div class="stakeholder-option" data-giver="Regular Group">Regular Group</div>
+                            <div class="stakeholder-option" data-giver="Influential Group">Influential Group</div>
+                            <div class="stakeholder-option" data-giver="Social Media Platform">Social Media Platform</div>
                         </div>
                         <div class="stakeholder-info" id="giver-info">All selected</div>
                     </div>
                     
                     <div class="stakeholder-group">
-                        <h4>🔵 Receiver Filter (Who was affected)</h4>
+                        <h4>Receiver Filter (Who was affected)</h4>
                         <div class="stakeholder-options" id="receiver-options">
                             <div class="stakeholder-option all-option active" data-receiver="all">All</div>
-                            <div class="stakeholder-option" data-receiver="1-r">1-r (Individual Regular)</div>
-                            <div class="stakeholder-option" data-receiver="1-i">1-i (Individual Influential)</div>
-                            <div class="stakeholder-option" data-receiver="n-r">n-r (Multiple Regular)</div>
-                            <div class="stakeholder-option" data-receiver="n-i">n-i (Multiple Influential)</div>
-                            <div class="stakeholder-option" data-receiver="S">S (Social Media Platform)</div>
+                            <div class="stakeholder-option" data-receiver="Regular Individual">Regular Individual</div>
+                            <div class="stakeholder-option" data-receiver="Influential Individual">Influential Individual</div>
+                            <div class="stakeholder-option" data-receiver="Regular Group">Regular Group</div>
+                            <div class="stakeholder-option" data-receiver="Influential Group">Influential Group</div>
+                            <div class="stakeholder-option" data-receiver="Social Media Platform">Social Media Platform</div>
                         </div>
                         <div class="stakeholder-info" id="receiver-info">All selected</div>
                     </div>
@@ -920,6 +1100,19 @@
         let selectedYears = new Set();
         let availablePublications = [];
         let availableYears = [];
+
+        // Header filter variables
+        let headerFilters = {};
+        let availableHeaderValues = {};
+
+        // Stakeholder mapping
+        const stakeholderMapping = {
+            '1-r': 'Regular Individual',
+            '1-i': 'Influential Individual',
+            'n-r': 'Regular Group',
+            'n-i': 'Influential Group',
+            'S': 'Social Media Platform'
+        };
 
         // Dataset configurations
         const datasetConfigs = {
@@ -986,7 +1179,6 @@
             
             let cleaned = title.trim();
             
-            // Remove outer quotes if present
             if ((cleaned.startsWith('"') && cleaned.endsWith('"')) || 
                 (cleaned.startsWith("'") && cleaned.endsWith("'"))) {
                 cleaned = cleaned.slice(1, -1);
@@ -1048,6 +1240,11 @@
             return trimmed;
         }
 
+        function convertStakeholderValue(value) {
+            if (!value) return value;
+            return stakeholderMapping[value] || value;
+        }
+
         function getBehaviorColorClass(behaviorText) {
             if (!behaviorText) return '';
             
@@ -1072,12 +1269,224 @@
             return '';
         }
 
+        // Terminology Guide function
+        function toggleTerminology() {
+            const content = document.getElementById('terminologyContent');
+            const toggle = document.getElementById('terminologyToggle');
+            
+            if (content.classList.contains('show')) {
+                content.classList.remove('show');
+                content.classList.add('hide');
+                toggle.classList.remove('expanded');
+                toggle.textContent = '🔽';
+            } else {
+                content.classList.remove('hide');
+                content.classList.add('show');
+                toggle.classList.add('expanded');
+                toggle.textContent = '🔼';
+            }
+        }
+
+        // Header filter functions
+        function initializeHeaderFilters(headers) {
+            headerFilters = {};
+            availableHeaderValues = {};
+            
+            const filterableColumns = ['Stakeholder', 'Problematic Behavior', 'Platform'];
+            
+            headers.forEach((header, index) => {
+                if (filterableColumns.includes(header)) {
+                    headerFilters[header] = new Set(['all']);
+                    availableHeaderValues[header] = new Set();
+                }
+            });
+        }
+
+        function populateHeaderFilterValues() {
+            const filterableColumns = ['Stakeholder', 'Problematic Behavior', 'Platform'];
+            
+            filterableColumns.forEach(column => {
+                if (availableHeaderValues[column]) {
+                    availableHeaderValues[column].clear();
+                }
+            });
+            
+            currentData.forEach(row => {
+                const headers = getCurrentHeaders();
+                headers.forEach((header, index) => {
+                    if (filterableColumns.includes(header) && row[index]) {
+                        availableHeaderValues[header].add(row[index]);
+                    }
+                });
+            });
+        }
+
+        function createHeaderFilter(header, index) {
+            if (!['Stakeholder', 'Problematic Behavior', 'Platform'].includes(header)) {
+                return '';
+            }
+            
+            return `
+                <div class="header-filter" onclick="toggleHeaderFilter(event, '${header}', ${index})">▼</div>
+                <div class="header-filter-dropdown" id="filter-${header.replace(/\s+/g, '')}-${index}">
+                    <!-- Options populated dynamically -->
+                </div>
+            `;
+        }
+
+        function toggleHeaderFilter(event, header, index) {
+            event.stopPropagation();
+            
+            const dropdownId = `filter-${header.replace(/\s+/g, '')}-${index}`;
+            const dropdown = document.getElementById(dropdownId);
+            
+            document.querySelectorAll('.header-filter-dropdown').forEach(d => {
+                if (d.id !== dropdownId) {
+                    d.classList.remove('show');
+                }
+            });
+            
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+            } else {
+                populateHeaderFilterDropdown(header, dropdownId);
+                dropdown.classList.add('show');
+            }
+        }
+
+        function populateHeaderFilterDropdown(header, dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            const values = Array.from(availableHeaderValues[header] || []).sort();
+            
+            let html = `
+                <div class="header-filter-option" onclick="toggleHeaderFilterValue(event, '${header}', 'all')">
+                    <div class="header-filter-checkbox ${headerFilters[header].has('all') ? 'checked' : ''}">✓</div>
+                    <span>All</span>
+                </div>
+            `;
+            
+            values.forEach(value => {
+                const isChecked = headerFilters[header].has(value);
+                const escapedValue = value.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+                html += `
+                    <div class="header-filter-option" onclick="toggleHeaderFilterValue(event, '${header}', '${escapedValue}')">
+                        <div class="header-filter-checkbox ${isChecked ? 'checked' : ''}">✓</div>
+                        <span>${value}</span>
+                    </div>
+                `;
+            });
+            
+            dropdown.innerHTML = html;
+        }
+
+        function toggleHeaderFilterValue(event, header, value) {
+            event.stopPropagation();
+            
+            const decodedValue = value.replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+            const filterSet = headerFilters[header];
+            
+            if (decodedValue === 'all') {
+                filterSet.clear();
+                filterSet.add('all');
+            } else {
+                if (filterSet.has('all')) {
+                    filterSet.delete('all');
+                }
+                
+                if (filterSet.has(decodedValue)) {
+                    filterSet.delete(decodedValue);
+                } else {
+                    filterSet.add(decodedValue);
+                }
+                
+                if (filterSet.size === 0) {
+                    filterSet.add('all');
+                }
+            }
+            
+            applyAllFilters();
+            
+            const dropdown = event.target.closest('.header-filter-dropdown');
+            const checkboxes = dropdown.querySelectorAll('.header-filter-checkbox');
+            checkboxes.forEach(checkbox => {
+                const option = checkbox.closest('.header-filter-option');
+                const optionValue = option.textContent.trim();
+                
+                if (optionValue === 'All') {
+                    checkbox.classList.toggle('checked', filterSet.has('all'));
+                } else {
+                    checkbox.classList.toggle('checked', filterSet.has(optionValue));
+                }
+            });
+        }
+
+        function getCurrentHeaders() {
+            if (currentDataset === '1') {
+                return datasetConfigs['1'].columns;
+            } else if (currentDataset === '2') {
+                if (currentClassification === 'crisis') {
+                    return datasetConfigs['2'].crisisColumns;
+                } else {
+                    return datasetConfigs['2'].columns;
+                }
+            }
+            return [];
+        }
+
+        function applyAllFilters() {
+            let dataToFilter = [...currentData];
+            
+            // Apply stakeholder filters for Dataset 2 OPB
+            if (currentDataset === '2' && currentClassification === 'opb') {
+                dataToFilter = dataToFilter.filter(row => {
+                    const giver = row[2]; // Giver column
+                    const receiver = row[3]; // Receiver column
+                    
+                    const giverMatch = currentGiverFilters.has('all') || currentGiverFilters.has(giver);
+                    const receiverMatch = currentReceiverFilters.has('all') || currentReceiverFilters.has(receiver);
+                    
+                    return giverMatch && receiverMatch;
+                });
+            }
+            
+            // Apply Dataset 1 filters
+            if (currentDataset === '1') {
+                dataToFilter = dataToFilter.filter(row => {
+                    const publication = row[1]; // Publication Title
+                    const year = row[3]; // Year
+                    
+                    const publicationMatch = selectedPublications.size === 0 || selectedPublications.has(publication);
+                    const yearMatch = selectedYears.size === 0 || selectedYears.has(year);
+                    
+                    return publicationMatch && yearMatch;
+                });
+            }
+            
+            // Apply header filters
+            const headers = getCurrentHeaders();
+            dataToFilter = dataToFilter.filter(row => {
+                return headers.every((header, index) => {
+                    if (!headerFilters[header]) return true;
+                    
+                    const filterSet = headerFilters[header];
+                    if (filterSet.has('all')) return true;
+                    
+                    const cellValue = row[index] || '';
+                    return filterSet.has(cellValue);
+                });
+            });
+            
+            filteredData = dataToFilter;
+            currentPage = 1;
+            updateTable();
+            updateResultsInfo();
+        }
+
         // Dataset 1 multiselect functions
         function createMultiselectOptions(containerId, options, selectedSet, type) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
             
-            // Add "Select All" option
             const selectAllDiv = document.createElement('div');
             selectAllDiv.className = 'multiselect-option';
             selectAllDiv.innerHTML = `
@@ -1090,7 +1499,6 @@
             });
             container.appendChild(selectAllDiv);
             
-            // Add individual options
             options.forEach((option, index) => {
                 const optionDiv = document.createElement('div');
                 optionDiv.className = 'multiselect-option';
@@ -1120,7 +1528,7 @@
             }
             
             updateMultiselectDisplay(type);
-            applyFilters();
+            applyAllFilters();
         }
 
         function toggleOption(type, option, index) {
@@ -1133,7 +1541,7 @@
             }
             
             updateMultiselectDisplay(type);
-            applyFilters();
+            applyAllFilters();
         }
 
         function updateMultiselectDisplay(type) {
@@ -1173,8 +1581,6 @@
         }
 
         function populateFilters() {
-            console.log('Populating filters with data:', currentData.length, 'rows');
-            
             availablePublications = [...new Set(currentData.map(row => row[1]).filter(pub => pub))].sort();
             availableYears = [...new Set(currentData.map(row => row[3]).filter(year => year))].sort((a, b) => parseInt(b) - parseInt(a));
             
@@ -1189,35 +1595,18 @@
             updateFilterInfo();
         }
 
-        function applyFilters() {
-            filteredData = currentData.filter(row => {
-                const publication = row[1];
-                const year = row[3];
-                
-                const publicationMatch = selectedPublications.size === 0 || selectedPublications.has(publication);
-                const yearMatch = selectedYears.size === 0 || selectedYears.has(year);
-                
-                return publicationMatch && yearMatch;
-            });
-            
-            updateFilterInfo();
-            currentPage = 1;
-            updateTable();
-            updateResultsInfo();
-        }
-
         function clearPublicationFilter() {
             selectedPublications.clear();
             availablePublications.forEach(pub => selectedPublications.add(pub));
             updateMultiselectDisplay('publication');
-            applyFilters();
+            applyAllFilters();
         }
 
         function clearYearFilter() {
             selectedYears.clear();
             availableYears.forEach(year => selectedYears.add(year));
             updateMultiselectDisplay('year');
-            applyFilters();
+            applyAllFilters();
         }
 
         function updateFilterInfo() {
@@ -1246,8 +1635,6 @@
 
         // Dataset 2 functions
         function toggleStakeholderFilter(type, value) {
-            console.log('Toggling stakeholder filter:', type, value);
-            
             const filterSet = type === 'giver' ? currentGiverFilters : currentReceiverFilters;
             const options = document.querySelectorAll(`#${type}-options .stakeholder-option`);
             
@@ -1263,25 +1650,28 @@
             } else {
                 if (filterSet.has('all')) {
                     filterSet.delete('all');
-                    document.querySelector(`#${type}-options .stakeholder-option[data-${type}="all"]`).classList.remove('active');
+                    const allOption = document.querySelector(`#${type}-options .stakeholder-option[data-${type}="all"]`);
+                    if (allOption) allOption.classList.remove('active');
                 }
                 
+                const targetOption = document.querySelector(`#${type}-options .stakeholder-option[data-${type}="${value}"]`);
                 if (filterSet.has(value)) {
                     filterSet.delete(value);
-                    document.querySelector(`#${type}-options .stakeholder-option[data-${type}="${value}"]`).classList.remove('active');
+                    if (targetOption) targetOption.classList.remove('active');
                 } else {
                     filterSet.add(value);
-                    document.querySelector(`#${type}-options .stakeholder-option[data-${type}="${value}"]`).classList.add('active');
+                    if (targetOption) targetOption.classList.add('active');
                 }
                 
                 if (filterSet.size === 0) {
                     filterSet.add('all');
-                    document.querySelector(`#${type}-options .stakeholder-option[data-${type}="all"]`).classList.add('active');
+                    const allOption = document.querySelector(`#${type}-options .stakeholder-option[data-${type}="all"]`);
+                    if (allOption) allOption.classList.add('active');
                 }
             }
             
             updateStakeholderInfo(type);
-            applyDataset2Filters();
+            applyAllFilters();
         }
 
         function updateStakeholderInfo(type) {
@@ -1295,36 +1685,13 @@
             }
         }
 
-        function applyDataset2Filters() {
-            if (currentDataset !== '2' || currentClassification !== 'opb') {
-                return;
-            }
-            
-            filteredData = currentData.filter(row => {
-                const giver = row[2];
-                const receiver = row[3];
-                
-                const giverMatch = currentGiverFilters.has('all') || currentGiverFilters.has(giver);
-                const receiverMatch = currentReceiverFilters.has('all') || currentReceiverFilters.has(receiver);
-                
-                return giverMatch && receiverMatch;
-            });
-            
-            currentPage = 1;
-            updateTable();
-            updateResultsInfo();
-        }
-
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing...');
             setupEventListeners();
             loadCurrentData();
         });
 
         function setupEventListeners() {
-            console.log('Setting up event listeners...');
-            
             // Main navigation tabs
             document.querySelectorAll('.main-nav-tab').forEach(tab => {
                 tab.addEventListener('click', (e) => {
@@ -1373,6 +1740,9 @@
             // Close dropdowns when clicking outside
             document.addEventListener('click', () => {
                 closeAllDropdowns();
+                document.querySelectorAll('.header-filter-dropdown').forEach(d => {
+                    d.classList.remove('show');
+                });
             });
 
             // Search functionality
@@ -1409,8 +1779,6 @@
         }
 
         function switchDataset(dataset) {
-            console.log('Switching to dataset:', dataset);
-            
             // Update active tab
             document.querySelectorAll('.main-nav-tab').forEach(tab => {
                 tab.classList.remove('active');
@@ -1418,6 +1786,14 @@
                     tab.classList.add('active');
                 }
             });
+
+            // Show/hide terminology guide
+            const terminologyGuide = document.getElementById('terminology-guide');
+            if (dataset === '2') {
+                terminologyGuide.classList.add('show');
+            } else {
+                terminologyGuide.classList.remove('show');
+            }
 
             // Show/hide appropriate controls
             const dataset1Filters = document.getElementById('dataset1-filters');
@@ -1427,12 +1803,14 @@
                 dataset1Filters.classList.add('show');
                 dataset2Controls.classList.remove('show');
                 
+                // Reset Dataset 1 filters
                 selectedPublications.clear();
                 selectedYears.clear();
             } else {
                 dataset1Filters.classList.remove('show');
                 dataset2Controls.classList.add('show');
                 
+                // Reset Dataset 2 state
                 currentClassification = 'opb';
                 currentSubcategory = 'all';
                 currentGiverFilters = new Set(['all']);
@@ -1453,17 +1831,23 @@
                     }
                 });
                 
+                // Reset stakeholder filters to default state
                 document.querySelectorAll('.stakeholder-option').forEach(option => {
                     option.classList.remove('active');
-                    if (option.textContent === 'All') {
+                    if (option.dataset.giver === 'all' || option.dataset.receiver === 'all') {
                         option.classList.add('active');
                     }
                 });
                 
+                // Show OPB section
                 const opbSection = document.getElementById('opb-section');
-                if (opbSection) opbSection.classList.add('show');
+                opbSection.classList.add('show');
+                
+                updateStakeholderInfo('giver');
+                updateStakeholderInfo('receiver');
             }
 
+            // Clear search
             document.getElementById('searchInput').value = '';
             closeAllDropdowns();
             
@@ -1472,8 +1856,7 @@
         }
 
         function switchClassification(classification) {
-            console.log('Switching to classification:', classification);
-            
+            // Update active tab
             document.querySelectorAll('.classification-tab').forEach(tab => {
                 tab.classList.remove('active');
                 if (tab.dataset.classification === classification) {
@@ -1481,6 +1864,7 @@
                 }
             });
 
+            // Show/hide OPB section
             const opbSection = document.getElementById('opb-section');
             if (classification === 'opb') {
                 opbSection.classList.add('show');
@@ -1493,8 +1877,7 @@
         }
 
         function switchSubcategory(subcategory) {
-            console.log('Switching to subcategory:', subcategory);
-            
+            // Update active tab
             document.querySelectorAll('.subcategory-tab').forEach(tab => {
                 tab.classList.remove('active');
                 if (tab.dataset.subcategory === subcategory) {
@@ -1507,8 +1890,7 @@
         }
 
         async function loadCurrentData() {
-            console.log('Loading current data for dataset:', currentDataset, 'classification:', currentClassification, 'subcategory:', currentSubcategory);
-            
+            // Show loading state
             document.getElementById('resultsInfo').textContent = 'Loading data...';
             document.getElementById('tableBody').innerHTML = '<tr><td colspan="11" class="loading">Loading dataset...</td></tr>';
             
@@ -1521,7 +1903,9 @@
                     if (currentClassification === 'crisis') {
                         filename = datasetConfigs['2'].crisisFile;
                     } else {
-                        filename = datasetConfigs['2'].opbCategories[currentSubcategory].file;
+                        // OPB with subcategory
+                        const categoryConfig = datasetConfigs['2'].opbCategories[currentSubcategory];
+                        filename = categoryConfig ? categoryConfig.file : datasetConfigs['2'].opbCategories.all.file;
                     }
                 }
                 
@@ -1535,27 +1919,24 @@
                 const csvText = await response.text();
                 const parsedData = parseCSV(csvText);
                 
+                // Remove header row if it exists
                 if (parsedData.length > 0) {
                     const firstRow = parsedData[0];
-                    if (firstRow.some(cell => cell && (
-                        cell.toLowerCase().includes('title') || 
-                        cell.toLowerCase().includes('article') || 
-                        cell.toLowerCase().includes('selected') ||
-                        cell.toLowerCase().includes('stakeholder')
-                    ))) {
+                    if (firstRow.some(cell => cell && (cell.toLowerCase().includes('title') || cell.toLowerCase().includes('article') || cell.toLowerCase().includes('selected')))) {
                         parsedData.shift();
                     }
                 }
                 
+                // Process data based on dataset type
                 if (currentDataset === '1') {
                     currentData = parsedData.map(row => {
                         if (row.length >= 5) {
                             return [
-                                cleanArticleTitle(row[0]) || '',
-                                row[1] || '',
-                                row[2] || '',
-                                row[3] || '',
-                                row[4] || ''
+                                cleanArticleTitle(row[0]) || '', // Article Title
+                                row[1] || '', // Publication Title
+                                row[2] || '', // Date
+                                row[3] || '', // Year
+                                row[4] || ''  // Article Link
                             ];
                         }
                         return ['', '', '', '', ''];
@@ -1563,29 +1944,31 @@
                     
                     populateFilters();
                     filteredData = [...currentData];
-                    applyFilters();
+                    applyAllFilters();
                 } else {
+                    // Dataset 2 processing
                     if (currentClassification === 'crisis') {
                         currentData = parsedData.map(row => {
                             return [
-                                row[0] || '',
-                                row[1] || '',
-                                row[2] || '',
-                                row[3] || ''
+                                row[0] || '', // Article Title
+                                row[1] || '', // Publication
+                                row[2] || '', // Date
+                                row[3] || ''  // Link
                             ];
                         });
                     } else {
+                        // OPB data processing with stakeholder conversion
                         currentData = parsedData.map(row => {
                             if (row.length >= 8) {
                                 return [
-                                    parseSelectedArticleData(row[0]) || '',
-                                    row[1] || '',
-                                    row[2] || '',
-                                    row[3] || '',
-                                    row[4] || '',
-                                    row[5] || '',
-                                    row[6] || '',
-                                    row[7] || ''
+                                    parseSelectedArticleData(row[0]) || '', // Selected Article
+                                    convertStakeholderValue(row[1]) || '', // Stakeholder
+                                    convertStakeholderValue(row[2]) || '', // Giver
+                                    convertStakeholderValue(row[3]) || '', // Receiver
+                                    row[4] || '', // Problematic Behavior
+                                    row[5] || '', // Aftermath
+                                    row[6] || '', // Platform
+                                    row[7] || ''  // Link
                                 ];
                             }
                             return ['', '', '', '', '', '', '', ''];
@@ -1593,9 +1976,13 @@
                     }
                     
                     filteredData = [...currentData];
-                    if (currentClassification === 'opb') {
-                        applyDataset2Filters();
-                    }
+                }
+                
+                // Initialize header filters for Dataset 2
+                if (currentDataset === '2') {
+                    const headers = getCurrentHeaders();
+                    initializeHeaderFilters(headers);
+                    populateHeaderFilterValues();
                 }
                 
                 updateTable();
@@ -1610,30 +1997,29 @@
         }
 
         function updateTable() {
-            console.log('Updating table with data:', filteredData.length, 'rows');
-            
             const tableHeader = document.getElementById('tableHeader');
             const tableBody = document.getElementById('tableBody');
             
-            let headers = [];
-            if (currentDataset === '1') {
-                headers = datasetConfigs['1'].columns;
-            } else if (currentDataset === '2') {
-                if (currentClassification === 'crisis') {
-                    headers = datasetConfigs['2'].crisisColumns;
-                } else {
-                    headers = datasetConfigs['2'].columns;
-                }
-            }
+            // Update headers based on current dataset
+            const headers = getCurrentHeaders();
             
-            tableHeader.innerHTML = '<tr>' + 
-                headers.map(header => `<th>${header}</th>`).join('') + 
-                '</tr>';
+            // Create header row with filters
+            const headerCells = headers.map((header, index) => {
+                const isFilterable = ['Stakeholder', 'Problematic Behavior', 'Platform'].includes(header) && currentDataset === '2';
+                const filterClass = isFilterable ? 'filterable' : '';
+                const filterHTML = isFilterable ? createHeaderFilter(header, index) : '';
+                
+                return `<th class="${filterClass}">${header}${filterHTML}</th>`;
+            }).join('');
             
+            tableHeader.innerHTML = `<tr>${headerCells}</tr>`;
+            
+            // Calculate pagination
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
             const pageData = filteredData.slice(startIndex, endIndex);
             
+            // Create table rows
             if (pageData.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="' + headers.length + '" class="loading">No data found</td></tr>';
             } else {
@@ -1641,13 +2027,13 @@
                     const cells = row.map((cell, cellIndex) => {
                         let cellContent = cell || '';
                         
-                        if (headers[cellIndex] === 'Article Link' && cellContent.startsWith('http')) {
+                        // Special handling for link columns
+                        if ((headers[cellIndex] === 'Article Link' || headers[cellIndex] === 'Link') && cellContent.startsWith('http')) {
                             return `<td><a href="${cellContent}" target="_blank" class="link-cell">View Article</a></td>`;
-                        } else if (headers[cellIndex] === 'Link' && cellContent.startsWith('http')) {
-                            return `<td><a href="${cellContent}" target="_blank" class="link-cell">Link</a></td>`;
-                        } else if (headers[cellIndex] === 'Problematic Behavior') {
+                        } else if (headers[cellIndex] === 'Problematic Behavior' && cellContent) {
+                            // Add color coding for problematic behavior
                             const colorClass = getBehaviorColorClass(cellContent);
-                            return `<td><span class="behavior-tag ${colorClass}">${cellContent}</span></td>`;
+                            return `<td title="${cellContent}"><span class="behavior-tag ${colorClass}">${cellContent}</span></td>`;
                         } else {
                             return `<td title="${cellContent}">${cellContent}</td>`;
                         }
@@ -1687,18 +2073,28 @@
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             
             if (!searchTerm) {
-                if (currentDataset === '1') {
-                    applyFilters();
-                } else if (currentDataset === '2' && currentClassification === 'opb') {
-                    applyDataset2Filters();
-                } else {
-                    filteredData = [...currentData];
-                }
+                // No search term - apply other filters
+                applyAllFilters();
             } else {
-                let dataToSearch = currentData;
+                // Apply all filters first, then search
+                let baseData = [...currentData];
                 
+                // Apply stakeholder filters for Dataset 2 OPB
+                if (currentDataset === '2' && currentClassification === 'opb') {
+                    baseData = baseData.filter(row => {
+                        const giver = row[2];
+                        const receiver = row[3];
+                        
+                        const giverMatch = currentGiverFilters.has('all') || currentGiverFilters.has(giver);
+                        const receiverMatch = currentReceiverFilters.has('all') || currentReceiverFilters.has(receiver);
+                        
+                        return giverMatch && receiverMatch;
+                    });
+                }
+                
+                // Apply Dataset 1 filters
                 if (currentDataset === '1') {
-                    dataToSearch = currentData.filter(row => {
+                    baseData = baseData.filter(row => {
                         const publication = row[1];
                         const year = row[3];
                         
@@ -1707,17 +2103,24 @@
                         
                         return publicationMatch && yearMatch;
                     });
-                } else if (currentDataset === '2' && currentClassification === 'opb') {
-                    dataToSearch = currentData.filter(row => {
-                        const giver = row[2];
-                        const receiver = row[3];
-                        const giverMatch = currentGiverFilters.has('all') || currentGiverFilters.has(giver);
-                        const receiverMatch = currentReceiverFilters.has('all') || currentReceiverFilters.has(receiver);
-                        return giverMatch && receiverMatch;
-                    });
                 }
                 
-                filteredData = dataToSearch.filter(row => 
+                // Apply header filters
+                const headers = getCurrentHeaders();
+                baseData = baseData.filter(row => {
+                    return headers.every((header, index) => {
+                        if (!headerFilters[header]) return true;
+                        
+                        const filterSet = headerFilters[header];
+                        if (filterSet.has('all')) return true;
+                        
+                        const cellValue = row[index] || '';
+                        return filterSet.has(cellValue);
+                    });
+                });
+                
+                // Apply search filter
+                filteredData = baseData.filter(row => 
                     row.some(cell => 
                         cell && cell.toString().toLowerCase().includes(searchTerm)
                     )
