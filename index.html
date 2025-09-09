@@ -144,7 +144,7 @@
             display: none;
         }
 
-        .dataset1-filters.active {
+        .dataset1-filters.show {
             display: block;
         }
 
@@ -323,8 +323,8 @@
             border-left: 3px solid #3498db;
         }
 
-        /* Data Classification for Dataset 2 */
-        .data-classification {
+        /* Dataset 2 Controls */
+        .dataset2-controls {
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -333,11 +333,11 @@
             display: none;
         }
 
-        .data-classification.active {
+        .dataset2-controls.show {
             display: block;
         }
 
-        .data-classification h3 {
+        .dataset2-controls h3 {
             color: #2c3e50;
             margin-bottom: 15px;
             font-size: 1.1rem;
@@ -371,6 +371,121 @@
             background: #3498db;
             border-color: #3498db;
             color: white;
+        }
+
+        /* OPB Subcategories */
+        .opb-section {
+            display: none;
+        }
+
+        .opb-section.show {
+            display: block;
+        }
+
+        .opb-section h4 {
+            color: #34495e;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .subcategory-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .subcategory-tab {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #7f8c8d;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .subcategory-tab:hover {
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .subcategory-tab.active {
+            background: #3498db;
+            border-color: #3498db;
+            color: white;
+        }
+
+        /* Stakeholder Filters */
+        .stakeholder-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stakeholder-group {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e1e8ed;
+        }
+
+        .stakeholder-group h4 {
+            color: #34495e;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .stakeholder-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .stakeholder-option {
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid #d5dbdb;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #7f8c8d;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .stakeholder-option:hover {
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .stakeholder-option.active {
+            background: #3498db;
+            border-color: #3498db;
+            color: white;
+        }
+
+        .stakeholder-option.all-option {
+            font-weight: 600;
+            border-width: 2px;
+        }
+
+        .stakeholder-option.all-option.active {
+            background: #27ae60;
+            border-color: #27ae60;
+        }
+
+        .stakeholder-info {
+            font-size: 11px;
+            color: #7f8c8d;
+            margin-top: 8px;
+            padding: 4px 8px;
+            background: #f8f9fa;
+            border-radius: 3px;
+            border-left: 3px solid #3498db;
         }
 
         .controls {
@@ -526,6 +641,52 @@
             margin: 20px 0;
         }
 
+        /* Online Problematic Behavior Color Coding */
+        .behavior-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .behavior-deceptive { 
+            background-color: #fce4ec; 
+            color: #ad1457; 
+        }
+        
+        .behavior-offensive { 
+            background-color: #fff3e0; 
+            color: #ef6c00; 
+        }
+        
+        .behavior-safety { 
+            background-color: #fff9c4; 
+            color: #f57f17; 
+        }
+        
+        .behavior-regulated { 
+            background-color: #e8f5e8; 
+            color: #2e7d32; 
+        }
+        
+        .behavior-scaled { 
+            background-color: #e3f2fd; 
+            color: #1565c0; 
+        }
+        
+        .behavior-violent { 
+            background-color: #e8eaf6; 
+            color: #3f51b5; 
+        }
+        
+        .behavior-community { 
+            background-color: #f3e5f5; 
+            color: #7b1fa2; 
+        }
+
         @media (max-width: 768px) {
             .controls {
                 grid-template-columns: 1fr;
@@ -554,6 +715,10 @@
             }
 
             .dataset-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .stakeholder-section {
                 grid-template-columns: 1fr;
             }
         }
@@ -595,7 +760,7 @@
         </div>
 
         <!-- Dataset 1 Filters -->
-        <div class="dataset1-filters active" id="dataset1-filters">
+        <div class="dataset1-filters show" id="dataset1-filters">
             <h3>Filter Dataset 1</h3>
             <div class="filter-grid">
                 <div class="filter-group">
@@ -634,9 +799,11 @@
             </div>
         </div>
 
-        <!-- Data Classification for Dataset 2 -->
-        <div class="data-classification" id="dataset2-classification">
-            <h3>Data Classification</h3>
+        <!-- Dataset 2 Controls -->
+        <div class="dataset2-controls" id="dataset2-controls">
+            <h3>Dataset 2 Classification & Filters</h3>
+            
+            <!-- Classification Tabs -->
             <div class="classification-tabs">
                 <button class="classification-tab active" data-classification="opb">
                     Online Problematic Behavior
@@ -644,6 +811,62 @@
                 <button class="classification-tab" data-classification="crisis">
                     Relevant to Crisis
                 </button>
+            </div>
+
+            <!-- OPB Section -->
+            <div class="opb-section show" id="opb-section">
+                <h4>
+                    Problematic Behavior Categories: 
+                    <span style="font-size: 12px; color: #7f8c8d; font-weight: normal;">
+                        We have referred to the categories of Abuse types in TSPA: 
+                        <a href="https://www.tspa.org/curriculum/ts-fundamentals/policy/abuse-types/" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           style="color: #3498db; text-decoration: underline;">
+                            https://www.tspa.org/curriculum/ts-fundamentals/policy/abuse-types/
+                        </a>
+                    </span>
+                </h4>
+                
+                <div class="subcategory-tabs">
+                    <button class="subcategory-tab active" data-subcategory="all">All</button>
+                    <button class="subcategory-tab" data-subcategory="deceptive">Deceptive & Fraudulent</button>
+                    <button class="subcategory-tab" data-subcategory="offensive">Offensive & Objectionable</button>
+                    <button class="subcategory-tab" data-subcategory="safety">User Safety</button>
+                    <button class="subcategory-tab" data-subcategory="regulated">Regulated Goods & Services</button>
+                    <button class="subcategory-tab" data-subcategory="scaled">Scaled Abuse</button>
+                    <button class="subcategory-tab" data-subcategory="violent">Violent & Criminal</button>
+                    <button class="subcategory-tab" data-subcategory="community">Community Rules</button>
+                </div>
+
+                <!-- Stakeholder Filters -->
+                <div class="stakeholder-section">
+                    <div class="stakeholder-group">
+                        <h4>🔴 Giver Filter (Who caused the problem)</h4>
+                        <div class="stakeholder-options" id="giver-options">
+                            <div class="stakeholder-option all-option active" data-giver="all">All</div>
+                            <div class="stakeholder-option" data-giver="1-r">1-r (Individual Regular)</div>
+                            <div class="stakeholder-option" data-giver="1-i">1-i (Individual Influential)</div>
+                            <div class="stakeholder-option" data-giver="n-r">n-r (Multiple Regular)</div>
+                            <div class="stakeholder-option" data-giver="n-i">n-i (Multiple Influential)</div>
+                            <div class="stakeholder-option" data-giver="S">S (Social Media Platform)</div>
+                        </div>
+                        <div class="stakeholder-info" id="giver-info">All selected</div>
+                    </div>
+                    
+                    <div class="stakeholder-group">
+                        <h4>🔵 Receiver Filter (Who was affected)</h4>
+                        <div class="stakeholder-options" id="receiver-options">
+                            <div class="stakeholder-option all-option active" data-receiver="all">All</div>
+                            <div class="stakeholder-option" data-receiver="1-r">1-r (Individual Regular)</div>
+                            <div class="stakeholder-option" data-receiver="1-i">1-i (Individual Influential)</div>
+                            <div class="stakeholder-option" data-receiver="n-r">n-r (Multiple Regular)</div>
+                            <div class="stakeholder-option" data-receiver="n-i">n-i (Multiple Influential)</div>
+                            <div class="stakeholder-option" data-receiver="S">S (Social Media Platform)</div>
+                        </div>
+                        <div class="stakeholder-info" id="receiver-info">All selected</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -684,6 +907,9 @@
         // Global variables
         let currentDataset = '1';
         let currentClassification = 'opb';
+        let currentSubcategory = 'all';
+        let currentGiverFilters = new Set(['all']);
+        let currentReceiverFilters = new Set(['all']);
         let currentData = [];
         let filteredData = [];
         let currentPage = 1;
@@ -694,8 +920,6 @@
         let selectedYears = new Set();
         let availablePublications = [];
         let availableYears = [];
-        let isPublicationDropdownOpen = false;
-        let isYearDropdownOpen = false;
 
         // Dataset configurations
         const datasetConfigs = {
@@ -706,6 +930,16 @@
             },
             '2': {
                 name: 'Annotated Dataset',
+                opbCategories: {
+                    all: { file: 'dataset1_all.csv', name: 'All OPB Entries' },
+                    deceptive: { file: 'dataset1_deceptive.csv', name: 'Deceptive & Fraudulent Behavior' },
+                    offensive: { file: 'dataset1_offensive.csv', name: 'Offensive & Objectionable Content' },
+                    safety: { file: 'dataset1_safety.csv', name: 'User Safety' },
+                    regulated: { file: 'dataset1_regulated.csv', name: 'Regulated Goods & Services' },
+                    scaled: { file: 'dataset1_scaled.csv', name: 'Scaled Abuse' },
+                    violent: { file: 'dataset1_violent.csv', name: 'Violent & Criminal Behavior' },
+                    community: { file: 'dataset1_community.csv', name: 'Community Specific Rules' }
+                },
                 crisisFile: 'dataset1_crisis.csv',
                 columns: ["Selected Article", "Stakeholder", "Giver", "Receiver", "Problematic Behavior", "Aftermath", "Platform", "Link"],
                 crisisColumns: ["Article Title", "Publication", "Date", "Link"]
@@ -761,6 +995,83 @@
             return cleaned.trim();
         }
 
+        function parseSelectedArticleData(cellData) {
+            if (!cellData || cellData.trim() === '') return '';
+            
+            const trimmed = cellData.trim();
+            
+            if (trimmed.startsWith('(') && trimmed.endsWith(')')) {
+                try {
+                    const content = trimmed.slice(1, -1);
+                    const parts = [];
+                    let currentPart = '';
+                    let inQuotes = false;
+                    let quoteChar = '';
+                    
+                    for (let i = 0; i < content.length; i++) {
+                        const char = content[i];
+                        
+                        if ((char === '"' || char === "'") && !inQuotes) {
+                            inQuotes = true;
+                            quoteChar = char;
+                        } else if (char === quoteChar && inQuotes) {
+                            inQuotes = false;
+                            quoteChar = '';
+                        } else if (char === ',' && !inQuotes) {
+                            if (currentPart.trim()) {
+                                parts.push(currentPart.trim());
+                                currentPart = '';
+                            }
+                            continue;
+                        }
+                        
+                        currentPart += char;
+                    }
+                    
+                    if (currentPart.trim()) {
+                        parts.push(currentPart.trim());
+                    }
+                    
+                    if (parts.length > 0) {
+                        let title = parts[0].trim();
+                        if ((title.startsWith('"') && title.endsWith('"')) || 
+                            (title.startsWith("'") && title.endsWith("'"))) {
+                            title = title.slice(1, -1);
+                        }
+                        return title.trim();
+                    }
+                } catch (error) {
+                    console.warn('Error parsing tuple data:', error);
+                }
+            }
+            
+            return trimmed;
+        }
+
+        function getBehaviorColorClass(behaviorText) {
+            if (!behaviorText) return '';
+            
+            const behavior = behaviorText.toLowerCase();
+            
+            if (behavior.includes('deceptive') || behavior.includes('fraudulent')) {
+                return 'behavior-deceptive';
+            } else if (behavior.includes('offensive') || behavior.includes('objectionable')) {
+                return 'behavior-offensive';
+            } else if (behavior.includes('user safety') || behavior.includes('safety')) {
+                return 'behavior-safety';
+            } else if (behavior.includes('regulated') || behavior.includes('goods') || behavior.includes('services')) {
+                return 'behavior-regulated';
+            } else if (behavior.includes('scaled') || behavior.includes('abuse')) {
+                return 'behavior-scaled';
+            } else if (behavior.includes('violent') || behavior.includes('criminal')) {
+                return 'behavior-violent';
+            } else if (behavior.includes('community') || behavior.includes('rules')) {
+                return 'behavior-community';
+            }
+            
+            return '';
+        }
+
         // Dataset 1 multiselect functions
         function createMultiselectOptions(containerId, options, selectedSet, type) {
             const container = document.getElementById(containerId);
@@ -802,10 +1113,8 @@
             const options = type === 'publication' ? availablePublications : availableYears;
             
             if (selectedSet.size === options.length) {
-                // Deselect all
                 selectedSet.clear();
             } else {
-                // Select all
                 selectedSet.clear();
                 options.forEach(option => selectedSet.add(option));
             }
@@ -832,7 +1141,6 @@
             const options = type === 'publication' ? availablePublications : availableYears;
             const textElement = document.getElementById(type + 'Text');
             
-            // Update button text
             if (selectedSet.size === 0) {
                 textElement.textContent = `No ${type}s selected`;
             } else if (selectedSet.size === options.length) {
@@ -843,7 +1151,6 @@
                 textElement.textContent = `${selectedSet.size} ${type}s selected`;
             }
             
-            // Update checkboxes
             const selectAllCheckbox = document.getElementById(type + 'SelectAll');
             if (selectAllCheckbox) {
                 if (selectedSet.size === options.length) {
@@ -868,20 +1175,14 @@
         function populateFilters() {
             console.log('Populating filters with data:', currentData.length, 'rows');
             
-            // Extract unique publications and years
             availablePublications = [...new Set(currentData.map(row => row[1]).filter(pub => pub))].sort();
             availableYears = [...new Set(currentData.map(row => row[3]).filter(year => year))].sort((a, b) => parseInt(b) - parseInt(a));
             
-            console.log('Available publications:', availablePublications.length);
-            console.log('Available years:', availableYears.length);
-            
-            // Initially select all
             selectedPublications.clear();
             selectedYears.clear();
             availablePublications.forEach(pub => selectedPublications.add(pub));
             availableYears.forEach(year => selectedYears.add(year));
             
-            // Create multiselect options
             createMultiselectOptions('publicationDropdown', availablePublications, selectedPublications, 'publication');
             createMultiselectOptions('yearDropdown', availableYears, selectedYears, 'year');
             
@@ -889,19 +1190,15 @@
         }
 
         function applyFilters() {
-            console.log('Applying filters - Publications:', selectedPublications.size, 'Years:', selectedYears.size);
-            
             filteredData = currentData.filter(row => {
-                const publication = row[1]; // Publication Title
-                const year = row[3]; // Year
+                const publication = row[1];
+                const year = row[3];
                 
                 const publicationMatch = selectedPublications.size === 0 || selectedPublications.has(publication);
                 const yearMatch = selectedYears.size === 0 || selectedYears.has(year);
                 
                 return publicationMatch && yearMatch;
             });
-            
-            console.log('Filtered data length:', filteredData.length);
             
             updateFilterInfo();
             currentPage = 1;
@@ -947,6 +1244,77 @@
             }
         }
 
+        // Dataset 2 functions
+        function toggleStakeholderFilter(type, value) {
+            console.log('Toggling stakeholder filter:', type, value);
+            
+            const filterSet = type === 'giver' ? currentGiverFilters : currentReceiverFilters;
+            const options = document.querySelectorAll(`#${type}-options .stakeholder-option`);
+            
+            if (value === 'all') {
+                filterSet.clear();
+                filterSet.add('all');
+                options.forEach(opt => {
+                    opt.classList.remove('active');
+                    if (opt.dataset[type] === 'all') {
+                        opt.classList.add('active');
+                    }
+                });
+            } else {
+                if (filterSet.has('all')) {
+                    filterSet.delete('all');
+                    document.querySelector(`#${type}-options .stakeholder-option[data-${type}="all"]`).classList.remove('active');
+                }
+                
+                if (filterSet.has(value)) {
+                    filterSet.delete(value);
+                    document.querySelector(`#${type}-options .stakeholder-option[data-${type}="${value}"]`).classList.remove('active');
+                } else {
+                    filterSet.add(value);
+                    document.querySelector(`#${type}-options .stakeholder-option[data-${type}="${value}"]`).classList.add('active');
+                }
+                
+                if (filterSet.size === 0) {
+                    filterSet.add('all');
+                    document.querySelector(`#${type}-options .stakeholder-option[data-${type}="all"]`).classList.add('active');
+                }
+            }
+            
+            updateStakeholderInfo(type);
+            applyDataset2Filters();
+        }
+
+        function updateStakeholderInfo(type) {
+            const filterSet = type === 'giver' ? currentGiverFilters : currentReceiverFilters;
+            const infoElement = document.getElementById(`${type}-info`);
+            
+            if (filterSet.has('all')) {
+                infoElement.textContent = 'All selected';
+            } else {
+                infoElement.textContent = `${filterSet.size} selected`;
+            }
+        }
+
+        function applyDataset2Filters() {
+            if (currentDataset !== '2' || currentClassification !== 'opb') {
+                return;
+            }
+            
+            filteredData = currentData.filter(row => {
+                const giver = row[2];
+                const receiver = row[3];
+                
+                const giverMatch = currentGiverFilters.has('all') || currentGiverFilters.has(giver);
+                const receiverMatch = currentReceiverFilters.has('all') || currentReceiverFilters.has(receiver);
+                
+                return giverMatch && receiverMatch;
+            });
+            
+            currentPage = 1;
+            updateTable();
+            updateResultsInfo();
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing...');
@@ -960,16 +1328,34 @@
             // Main navigation tabs
             document.querySelectorAll('.main-nav-tab').forEach(tab => {
                 tab.addEventListener('click', (e) => {
-                    const dataset = e.target.dataset.dataset;
-                    switchDataset(dataset);
+                    switchDataset(e.target.dataset.dataset);
                 });
             });
 
             // Classification tabs for Dataset 2
             document.querySelectorAll('.classification-tab').forEach(tab => {
                 tab.addEventListener('click', (e) => {
-                    const classification = e.target.dataset.classification;
-                    switchClassification(classification);
+                    switchClassification(e.target.dataset.classification);
+                });
+            });
+
+            // OPB subcategory tabs
+            document.querySelectorAll('.subcategory-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    switchSubcategory(e.target.dataset.subcategory);
+                });
+            });
+
+            // Stakeholder filters
+            document.querySelectorAll('#giver-options .stakeholder-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    toggleStakeholderFilter('giver', e.target.dataset.giver);
+                });
+            });
+
+            document.querySelectorAll('#receiver-options .stakeholder-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    toggleStakeholderFilter('receiver', e.target.dataset.receiver);
                 });
             });
 
@@ -1004,7 +1390,6 @@
             const dropdown = document.getElementById(type + 'Dropdown');
             const arrow = document.getElementById(type + 'Arrow');
             
-            // Close other dropdown
             const otherType = type === 'publication' ? 'year' : 'publication';
             const otherDropdown = document.getElementById(otherType + 'Dropdown');
             const otherArrow = document.getElementById(otherType + 'Arrow');
@@ -1012,7 +1397,6 @@
             otherDropdown.classList.remove('open');
             otherArrow.classList.remove('open');
             
-            // Toggle current dropdown
             dropdown.classList.toggle('open');
             arrow.classList.toggle('open');
         }
@@ -1037,25 +1421,22 @@
 
             // Show/hide appropriate controls
             const dataset1Filters = document.getElementById('dataset1-filters');
-            const dataset2Classification = document.getElementById('dataset2-classification');
+            const dataset2Controls = document.getElementById('dataset2-controls');
             
             if (dataset === '1') {
-                dataset1Filters.style.display = 'block';
-                dataset1Filters.classList.add('active');
-                dataset2Classification.style.display = 'none';
-                dataset2Classification.classList.remove('active');
+                dataset1Filters.classList.add('show');
+                dataset2Controls.classList.remove('show');
                 
-                // Reset Dataset 1 filters
                 selectedPublications.clear();
                 selectedYears.clear();
             } else {
-                dataset1Filters.style.display = 'none';
-                dataset1Filters.classList.remove('active');
-                dataset2Classification.style.display = 'block';
-                dataset2Classification.classList.add('active');
+                dataset1Filters.classList.remove('show');
+                dataset2Controls.classList.add('show');
                 
-                // Reset Dataset 2 filters
                 currentClassification = 'opb';
+                currentSubcategory = 'all';
+                currentGiverFilters = new Set(['all']);
+                currentReceiverFilters = new Set(['all']);
                 
                 // Update Dataset 2 UI
                 document.querySelectorAll('.classification-tab').forEach(tab => {
@@ -1064,9 +1445,25 @@
                         tab.classList.add('active');
                     }
                 });
+                
+                document.querySelectorAll('.subcategory-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.dataset.subcategory === 'all') {
+                        tab.classList.add('active');
+                    }
+                });
+                
+                document.querySelectorAll('.stakeholder-option').forEach(option => {
+                    option.classList.remove('active');
+                    if (option.textContent === 'All') {
+                        option.classList.add('active');
+                    }
+                });
+                
+                const opbSection = document.getElementById('opb-section');
+                if (opbSection) opbSection.classList.add('show');
             }
 
-            // Clear search
             document.getElementById('searchInput').value = '';
             closeAllDropdowns();
             
@@ -1077,7 +1474,6 @@
         function switchClassification(classification) {
             console.log('Switching to classification:', classification);
             
-            // Update active tab
             document.querySelectorAll('.classification-tab').forEach(tab => {
                 tab.classList.remove('active');
                 if (tab.dataset.classification === classification) {
@@ -1085,14 +1481,34 @@
                 }
             });
 
+            const opbSection = document.getElementById('opb-section');
+            if (classification === 'opb') {
+                opbSection.classList.add('show');
+            } else {
+                opbSection.classList.remove('show');
+            }
+
             currentClassification = classification;
             loadCurrentData();
         }
 
-        async function loadCurrentData() {
-            console.log('Loading current data for dataset:', currentDataset);
+        function switchSubcategory(subcategory) {
+            console.log('Switching to subcategory:', subcategory);
             
-            // Show loading state
+            document.querySelectorAll('.subcategory-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.subcategory === subcategory) {
+                    tab.classList.add('active');
+                }
+            });
+
+            currentSubcategory = subcategory;
+            loadCurrentData();
+        }
+
+        async function loadCurrentData() {
+            console.log('Loading current data for dataset:', currentDataset, 'classification:', currentClassification, 'subcategory:', currentSubcategory);
+            
             document.getElementById('resultsInfo').textContent = 'Loading data...';
             document.getElementById('tableBody').innerHTML = '<tr><td colspan="11" class="loading">Loading dataset...</td></tr>';
             
@@ -1105,8 +1521,7 @@
                     if (currentClassification === 'crisis') {
                         filename = datasetConfigs['2'].crisisFile;
                     } else {
-                        // For now, use crisis file as placeholder for OPB
-                        filename = datasetConfigs['2'].crisisFile;
+                        filename = datasetConfigs['2'].opbCategories[currentSubcategory].file;
                     }
                 }
                 
@@ -1120,45 +1535,67 @@
                 const csvText = await response.text();
                 const parsedData = parseCSV(csvText);
                 
-                // Remove header row if it exists
                 if (parsedData.length > 0) {
                     const firstRow = parsedData[0];
-                    if (firstRow.some(cell => cell && (cell.toLowerCase().includes('title') || cell.toLowerCase().includes('article')))) {
+                    if (firstRow.some(cell => cell && (
+                        cell.toLowerCase().includes('title') || 
+                        cell.toLowerCase().includes('article') || 
+                        cell.toLowerCase().includes('selected') ||
+                        cell.toLowerCase().includes('stakeholder')
+                    ))) {
                         parsedData.shift();
                     }
                 }
                 
-                // Process data based on dataset type
                 if (currentDataset === '1') {
                     currentData = parsedData.map(row => {
                         if (row.length >= 5) {
                             return [
-                                cleanArticleTitle(row[0]) || '', // Article Title
-                                row[1] || '', // Publication Title
-                                row[2] || '', // Date
-                                row[3] || '', // Year
-                                row[4] || ''  // Article Link
+                                cleanArticleTitle(row[0]) || '',
+                                row[1] || '',
+                                row[2] || '',
+                                row[3] || '',
+                                row[4] || ''
                             ];
                         }
                         return ['', '', '', '', ''];
                     });
                     
-                    console.log('Processed Dataset 1 data:', currentData.slice(0, 3));
                     populateFilters();
                     filteredData = [...currentData];
                     applyFilters();
                 } else {
-                    // Simple processing for Dataset 2
-                    currentData = parsedData.map(row => {
-                        return [
-                            row[0] || '', // First column
-                            row[1] || '', // Second column
-                            row[2] || '', // Third column
-                            row[3] || ''  // Fourth column
-                        ];
-                    });
+                    if (currentClassification === 'crisis') {
+                        currentData = parsedData.map(row => {
+                            return [
+                                row[0] || '',
+                                row[1] || '',
+                                row[2] || '',
+                                row[3] || ''
+                            ];
+                        });
+                    } else {
+                        currentData = parsedData.map(row => {
+                            if (row.length >= 8) {
+                                return [
+                                    parseSelectedArticleData(row[0]) || '',
+                                    row[1] || '',
+                                    row[2] || '',
+                                    row[3] || '',
+                                    row[4] || '',
+                                    row[5] || '',
+                                    row[6] || '',
+                                    row[7] || ''
+                                ];
+                            }
+                            return ['', '', '', '', '', '', '', ''];
+                        });
+                    }
                     
                     filteredData = [...currentData];
+                    if (currentClassification === 'opb') {
+                        applyDataset2Filters();
+                    }
                 }
                 
                 updateTable();
@@ -1178,7 +1615,6 @@
             const tableHeader = document.getElementById('tableHeader');
             const tableBody = document.getElementById('tableBody');
             
-            // Update headers based on current dataset
             let headers = [];
             if (currentDataset === '1') {
                 headers = datasetConfigs['1'].columns;
@@ -1190,17 +1626,14 @@
                 }
             }
             
-            // Create header row
             tableHeader.innerHTML = '<tr>' + 
                 headers.map(header => `<th>${header}</th>`).join('') + 
                 '</tr>';
             
-            // Calculate pagination
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
             const pageData = filteredData.slice(startIndex, endIndex);
             
-            // Create table rows
             if (pageData.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="' + headers.length + '" class="loading">No data found</td></tr>';
             } else {
@@ -1208,7 +1641,6 @@
                     const cells = row.map((cell, cellIndex) => {
                         let cellContent = cell || '';
                         
-                        // Special handling for link columns
                         if (headers[cellIndex] === 'Article Link' && cellContent.startsWith('http')) {
                             return `<td><a href="${cellContent}" target="_blank" class="link-cell">View Article</a></td>`;
                         } else if (headers[cellIndex] === 'Link' && cellContent.startsWith('http')) {
@@ -1255,18 +1687,17 @@
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             
             if (!searchTerm) {
-                // No search term - apply appropriate filters
                 if (currentDataset === '1') {
                     applyFilters();
+                } else if (currentDataset === '2' && currentClassification === 'opb') {
+                    applyDataset2Filters();
                 } else {
                     filteredData = [...currentData];
                 }
             } else {
-                // Search term exists
                 let dataToSearch = currentData;
                 
                 if (currentDataset === '1') {
-                    // Apply Dataset 1 filters first, then search
                     dataToSearch = currentData.filter(row => {
                         const publication = row[1];
                         const year = row[3];
@@ -1276,9 +1707,16 @@
                         
                         return publicationMatch && yearMatch;
                     });
+                } else if (currentDataset === '2' && currentClassification === 'opb') {
+                    dataToSearch = currentData.filter(row => {
+                        const giver = row[2];
+                        const receiver = row[3];
+                        const giverMatch = currentGiverFilters.has('all') || currentGiverFilters.has(giver);
+                        const receiverMatch = currentReceiverFilters.has('all') || currentReceiverFilters.has(receiver);
+                        return giverMatch && receiverMatch;
+                    });
                 }
                 
-                // Apply search filter
                 filteredData = dataToSearch.filter(row => 
                     row.some(cell => 
                         cell && cell.toString().toLowerCase().includes(searchTerm)
