@@ -2177,6 +2177,9 @@
                 // Reset Dataset 1 filters
                 selectedPublications.clear();
                 selectedYears.clear();
+                
+                // Update filter info after resetting
+                updateFilterInfo();
             } else {
                 dataset1Filters.classList.remove('show');
                 dataset2Controls.classList.add('show');
