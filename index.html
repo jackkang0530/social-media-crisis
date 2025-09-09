@@ -1967,6 +1967,7 @@
             selectedPublications.clear();
             availablePublications.forEach(pub => selectedPublications.add(pub));
             updateMultiselectDisplay('publication');
+            updateFilterInfo();
             applyAllFilters();
         }
 
@@ -1974,6 +1975,7 @@
             selectedYears.clear();
             availableYears.forEach(year => selectedYears.add(year));
             updateMultiselectDisplay('year');
+            updateFilterInfo();
             applyAllFilters();
         }
 
